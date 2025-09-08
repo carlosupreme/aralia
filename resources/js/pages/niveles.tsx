@@ -161,7 +161,7 @@ export default function Niveles() {
                 {/* Header */}
                 <div className="flex flex-col gap-2">
                     <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
-                        <Target className="w-8 h-8 text-blue-600" />
+                        <Target className="w-8 h-8" />
                         Niveles de Entrenamiento
                     </h1>
                     <p className="text-muted-foreground">
@@ -170,7 +170,7 @@ export default function Niveles() {
                 </div>
 
                 {/* Program Overview */}
-                <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10">
+                <Card>
                     <CardHeader>
                         <CardTitle className="text-xl">{programInfo.title}</CardTitle>
                         <CardDescription className="text-base">
@@ -180,19 +180,19 @@ export default function Niveles() {
                     <CardContent>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-4">
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-blue-600">{completedLevels}</div>
+                                <div className="text-2xl font-bold">{completedLevels}</div>
                                 <div className="text-sm text-muted-foreground">Niveles Completados</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-green-600">{unlockedLevels}</div>
+                                <div className="text-2xl font-bold">{unlockedLevels}</div>
                                 <div className="text-sm text-muted-foreground">Niveles Desbloqueados</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-purple-600">{Math.round(totalProgress)}%</div>
+                                <div className="text-2xl font-bold text-primary">{Math.round(totalProgress)}%</div>
                                 <div className="text-sm text-muted-foreground">Progreso Total</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-orange-600">{programInfo.estimatedDuration}</div>
+                                <div className="text-2xl font-bold">{programInfo.estimatedDuration}</div>
                                 <div className="text-sm text-muted-foreground">Duración Estimada</div>
                             </div>
                         </div>
@@ -255,8 +255,8 @@ export default function Niveles() {
                     <CardContent>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-blue-100 rounded-full dark:bg-blue-900/20">
-                                    <Target className="w-4 h-4 text-blue-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Target className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Consistencia es Clave</h4>
@@ -267,8 +267,8 @@ export default function Niveles() {
                             </div>
                             
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-green-100 rounded-full dark:bg-green-900/20">
-                                    <Trophy className="w-4 h-4 text-green-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Trophy className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Aplica en la Práctica</h4>
@@ -279,8 +279,8 @@ export default function Niveles() {
                             </div>
                             
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-purple-100 rounded-full dark:bg-purple-900/20">
-                                    <Video className="w-4 h-4 text-purple-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Video className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Revisa el Material</h4>

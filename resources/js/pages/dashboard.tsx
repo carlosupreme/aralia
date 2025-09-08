@@ -170,7 +170,7 @@ export default function Dashboard() {
                             <Target className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-blue-600">{currentLevel}</div>
+                            <div className="text-2xl font-bold">{currentLevel}</div>
                             <p className="text-xs text-muted-foreground">
                                 65% al siguiente nivel
                             </p>
@@ -184,7 +184,7 @@ export default function Dashboard() {
                             <Star className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-purple-600">{totalXP.toLocaleString()} XP</div>
+                            <div className="text-2xl font-bold">{totalXP.toLocaleString()} XP</div>
                             <p className="text-xs text-muted-foreground">
                                 +150 XP esta semana
                             </p>
@@ -197,7 +197,7 @@ export default function Dashboard() {
                             <TrendingUp className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-green-600">{completedThisWeek}/{weeklyGoal}</div>
+                            <div className="text-2xl font-bold">{completedThisWeek}/{weeklyGoal}</div>
                             <p className="text-xs text-muted-foreground">
                                 Sesiones completadas
                             </p>
@@ -211,7 +211,7 @@ export default function Dashboard() {
                             <Calendar className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-orange-600">15</div>
+                            <div className="text-2xl font-bold text-primary">15</div>
                             <p className="text-xs text-muted-foreground">
                                 Enero - 4:00 PM
                             </p>

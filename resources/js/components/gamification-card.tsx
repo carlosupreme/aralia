@@ -30,17 +30,17 @@ const iconMap = {
 };
 
 const rarityColors = {
-    common: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200',
-    rare: 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400',
-    epic: 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400',
-    legendary: 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400',
+    common: 'text-muted-foreground',
+    rare: 'text-primary',
+    epic: 'text-foreground',
+    legendary: 'text-primary',
 };
 
 const rarityBorders = {
-    common: 'border-gray-200 dark:border-gray-700',
-    rare: 'border-blue-200 dark:border-blue-800',
-    epic: 'border-purple-200 dark:border-purple-800',
-    legendary: 'border-orange-200 dark:border-orange-800',
+    common: 'border-border',
+    rare: 'border-border',
+    epic: 'border-border',
+    legendary: 'border-border',
 };
 
 export function GamificationCard({ achievement, className }: GamificationCardProps) {
@@ -62,7 +62,7 @@ export function GamificationCard({ achievement, className }: GamificationCardPro
                         <div className={cn(
                             'p-2 rounded-full',
                             achievement.unlocked 
-                                ? 'bg-gradient-to-br from-yellow-400 to-orange-500 text-white'
+                                ? 'bg-primary text-primary-foreground'
                                 : 'bg-muted text-muted-foreground'
                         )}>
                             <Icon className="w-5 h-5" />
@@ -80,8 +80,8 @@ export function GamificationCard({ achievement, className }: GamificationCardPro
                         </div>
                     </div>
                     {achievement.unlocked && (
-                        <div className="flex items-center gap-1 text-yellow-500">
-                            <Star className="w-4 h-4 fill-current" />
+                        <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4" />
                             <span className="text-sm font-medium">+{achievement.rarity === 'legendary' ? 500 : achievement.rarity === 'epic' ? 300 : achievement.rarity === 'rare' ? 150 : 50} XP</span>
                         </div>
                     )}
@@ -107,7 +107,7 @@ export function GamificationCard({ achievement, className }: GamificationCardPro
                 )}
                 
                 {achievement.unlocked && (
-                    <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400 font-medium">
+                    <div className="flex items-center gap-2 text-sm text-primary font-medium">
                         <Trophy className="w-4 h-4" />
                         ¡Logro Desbloqueado!
                     </div>

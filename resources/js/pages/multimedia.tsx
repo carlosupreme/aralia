@@ -198,17 +198,17 @@ const contentTypeIcons = {
 };
 
 const contentTypeColors = {
-    video: 'text-red-500 bg-red-100 dark:bg-red-900/20',
-    article: 'text-blue-500 bg-blue-100 dark:bg-blue-900/20',
-    exercise: 'text-green-500 bg-green-100 dark:bg-green-900/20',
-    quiz: 'text-purple-500 bg-purple-100 dark:bg-purple-900/20',
-    audio: 'text-orange-500 bg-orange-100 dark:bg-orange-900/20',
+    video: 'bg-muted',
+    article: 'bg-muted',
+    exercise: 'bg-muted',
+    quiz: 'bg-muted',
+    audio: 'bg-muted',
 };
 
 const difficultyColors = {
-    principiante: 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400',
-    intermedio: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400',
-    avanzado: 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400',
+    principiante: 'text-muted-foreground',
+    intermedio: 'text-cyan-500',
+    avanzado: 'text-foreground',
 };
 
 export default function Multimedia() {
@@ -228,7 +228,7 @@ export default function Multimedia() {
                 {/* Header */}
                 <div className="flex flex-col gap-2">
                     <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
-                        <Play className="w-8 h-8 text-red-600" />
+                        <Play className="w-8 h-8" />
                         Contenido Multimedia
                     </h1>
                     <p className="text-muted-foreground">
@@ -237,7 +237,7 @@ export default function Multimedia() {
                 </div>
 
                 {/* Progress Overview */}
-                <Card className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/10 dark:to-orange-900/10">
+                <Card>
                     <CardHeader>
                         <CardTitle className="text-xl">Tu Progreso de Contenido</CardTitle>
                         <CardDescription>
@@ -247,15 +247,15 @@ export default function Multimedia() {
                     <CardContent>
                         <div className="grid gap-4 md:grid-cols-3 mb-4">
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-green-600">{completedContent}</div>
+                                <div className="text-2xl font-bold">{completedContent}</div>
                                 <div className="text-sm text-muted-foreground">Contenidos Completados</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-blue-600">{totalWatchTime}h</div>
+                                <div className="text-2xl font-bold">{totalWatchTime}h</div>
                                 <div className="text-sm text-muted-foreground">Tiempo de Estudio</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-purple-600">{Math.round(totalProgress)}%</div>
+                                <div className="text-2xl font-bold text-primary">{Math.round(totalProgress)}%</div>
                                 <div className="text-sm text-muted-foreground">Progreso Total</div>
                             </div>
                         </div>
@@ -299,7 +299,7 @@ export default function Multimedia() {
                     {/* Continue Learning */}
                     <div>
                         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                            <Clock className="w-5 h-5 text-blue-500" />
+                            <Clock className="w-5 h-5" />
                             Continúa Aprendiendo
                         </h2>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -369,7 +369,7 @@ export default function Multimedia() {
                     {/* Completed Content */}
                     <div>
                         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                            <CheckCircle className="w-5 h-5 text-green-500" />
+                            <CheckCircle className="w-5 h-5" />
                             Contenido Completado
                         </h2>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -425,8 +425,8 @@ export default function Multimedia() {
                     <CardContent>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-blue-100 rounded-full dark:bg-blue-900/20">
-                                    <Play className="w-4 h-4 text-blue-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Play className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Toma Notas</h4>
@@ -437,8 +437,8 @@ export default function Multimedia() {
                             </div>
                             
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-green-100 rounded-full dark:bg-green-900/20">
-                                    <Trophy className="w-4 h-4 text-green-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Trophy className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Practica Regularmente</h4>
@@ -449,8 +449,8 @@ export default function Multimedia() {
                             </div>
                             
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-purple-100 rounded-full dark:bg-purple-900/20">
-                                    <Bookmark className="w-4 h-4 text-purple-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Bookmark className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Repasa Contenido</h4>

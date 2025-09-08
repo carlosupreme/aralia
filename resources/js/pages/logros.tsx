@@ -178,28 +178,28 @@ const rarityStats = [
         name: 'Común', 
         count: allAchievements.filter(a => a.rarity === 'common').length,
         unlocked: allAchievements.filter(a => a.rarity === 'common' && a.unlocked).length,
-        color: 'text-gray-600'
+        color: 'text-muted-foreground'
     },
     { 
         rarity: 'rare', 
         name: 'Raro', 
         count: allAchievements.filter(a => a.rarity === 'rare').length,
         unlocked: allAchievements.filter(a => a.rarity === 'rare' && a.unlocked).length,
-        color: 'text-blue-600'
+        color: 'text-primary'
     },
     { 
         rarity: 'epic', 
         name: 'Épico', 
         count: allAchievements.filter(a => a.rarity === 'epic').length,
         unlocked: allAchievements.filter(a => a.rarity === 'epic' && a.unlocked).length,
-        color: 'text-purple-600'
+        color: 'text-foreground'
     },
     { 
         rarity: 'legendary', 
         name: 'Legendario', 
         count: allAchievements.filter(a => a.rarity === 'legendary').length,
         unlocked: allAchievements.filter(a => a.rarity === 'legendary' && a.unlocked).length,
-        color: 'text-orange-600'
+        color: 'text-primary'
     },
 ];
 
@@ -214,7 +214,7 @@ export default function Logros() {
                 {/* Header */}
                 <div className="flex flex-col gap-2">
                     <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
-                        <Trophy className="w-8 h-8 text-orange-600" />
+                        <Trophy className="w-8 h-8" />
                         Mis Logros
                     </h1>
                     <p className="text-muted-foreground">
@@ -223,7 +223,7 @@ export default function Logros() {
                 </div>
 
                 {/* Progress Overview */}
-                <Card className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/10 dark:to-yellow-900/10">
+                <Card>
                     <CardHeader>
                         <CardTitle className="text-xl flex items-center gap-2">
                             <Award className="w-6 h-6" />
@@ -294,7 +294,7 @@ export default function Logros() {
                     {/* Recent/Unlocked Achievements */}
                     <div>
                         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                            <Star className="w-5 h-5 text-yellow-500" />
+                            <Star className="w-5 h-5" />
                             Logros Desbloqueados
                         </h2>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -312,7 +312,7 @@ export default function Logros() {
                     {/* In Progress Achievements */}
                     <div>
                         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                            <Target className="w-5 h-5 text-blue-500" />
+                            <Target className="w-5 h-5" />
                             En Progreso
                         </h2>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -330,7 +330,7 @@ export default function Logros() {
                     {/* Locked/Mystery Achievements */}
                     <div>
                         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                            <Medal className="w-5 h-5 text-gray-500" />
+                            <Medal className="w-5 h-5" />
                             Por Desbloquear
                         </h2>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -357,8 +357,8 @@ export default function Logros() {
                     <CardContent>
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-blue-100 rounded-full dark:bg-blue-900/20">
-                                    <Target className="w-4 h-4 text-blue-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Target className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Mantén la Consistencia</h4>
@@ -369,8 +369,8 @@ export default function Logros() {
                             </div>
                             
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-purple-100 rounded-full dark:bg-purple-900/20">
-                                    <Star className="w-4 h-4 text-purple-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Star className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Explora Todo el Contenido</h4>
@@ -381,8 +381,8 @@ export default function Logros() {
                             </div>
                             
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-green-100 rounded-full dark:bg-green-900/20">
-                                    <Trophy className="w-4 h-4 text-green-600" />
+                                <div className="p-2 bg-muted rounded-full">
+                                    <Trophy className="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h4 className="font-medium text-sm">Busca la Excelencia</h4>

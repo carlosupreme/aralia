@@ -120,7 +120,7 @@ export default function Suscripcion() {
                 {/* Header */}
                 <div className="flex flex-col gap-2">
                     <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
-                        <CreditCard className="w-8 h-8 text-blue-600" />
+                        <CreditCard className="w-8 h-8" />
                         Suscripción y Facturación
                     </h1>
                     <p className="text-muted-foreground">
@@ -129,14 +129,14 @@ export default function Suscripcion() {
                 </div>
 
                 {/* Current Plan Status */}
-                <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10">
+                <Card>
                     <CardHeader>
                         <div className="flex items-center justify-between">
                             <CardTitle className="flex items-center gap-2">
                                 {currentPlan?.id === 'free' ? (
-                                    <Target className="w-5 h-5 text-gray-600" />
+                                    <Target className="w-5 h-5" />
                                 ) : (
-                                    <Crown className="w-5 h-5 text-yellow-600" />
+                                    <Crown className="w-5 h-5" />
                                 )}
                                 Plan Actual: {currentPlan?.name}
                             </CardTitle>
@@ -154,19 +154,19 @@ export default function Suscripcion() {
                     <CardContent>
                         <div className="grid gap-4 md:grid-cols-3">
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-blue-600">
+                                <div className="text-2xl font-bold">
                                     {currentSubscription.levelsAccess}/{currentSubscription.totalLevels}
                                 </div>
                                 <div className="text-sm text-muted-foreground">Niveles Disponibles</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-green-600">
+                                <div className="text-2xl font-bold">
                                     {currentSubscription.videocallsUsed}/{currentSubscription.videocallsAvailable}
                                 </div>
                                 <div className="text-sm text-muted-foreground">Videollamadas este Mes</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-purple-600">
+                                <div className="text-2xl font-bold text-primary">
                                     ${currentPlan?.price || 0}
                                 </div>
                                 <div className="text-sm text-muted-foreground">
@@ -176,14 +176,14 @@ export default function Suscripcion() {
                         </div>
                         
                         {currentPlan?.id === 'free' && (
-                            <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/10 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                            <div className="mt-4 p-3 bg-muted/50 rounded-lg border">
                                 <div className="flex items-start gap-2">
-                                    <AlertCircle className="w-4 h-4 text-yellow-600 mt-0.5" />
+                                    <AlertCircle className="w-4 h-4 mt-0.5" />
                                     <div className="text-sm">
-                                        <p className="font-medium text-yellow-800 dark:text-yellow-200">
+                                        <p className="font-medium">
                                             Acceso Limitado
                                         </p>
-                                        <p className="text-yellow-700 dark:text-yellow-300">
+                                        <p className="text-muted-foreground">
                                             Actualmente solo tienes acceso al primer nivel. Mejora a "Deportista" para desbloquear todo el contenido.
                                         </p>
                                     </div>
@@ -208,7 +208,7 @@ export default function Suscripcion() {
                             >
                                 {plan.popular && (
                                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                                        <Badge className="bg-blue-500 hover:bg-blue-600">
+                                        <Badge className="bg-primary hover:bg-primary/90">
                                             Más Popular
                                         </Badge>
                                     </div>
@@ -217,9 +217,9 @@ export default function Suscripcion() {
                                 <CardHeader className="text-center">
                                     <CardTitle className="text-2xl flex items-center justify-center gap-2">
                                         {plan.id === 'free' ? (
-                                            <Target className="w-6 h-6 text-gray-600" />
+                                            <Target className="w-6 h-6" />
                                         ) : (
-                                            <Crown className="w-6 h-6 text-yellow-600" />
+                                            <Crown className="w-6 h-6" />
                                         )}
                                         {plan.name}
                                     </CardTitle>
@@ -263,7 +263,7 @@ export default function Suscripcion() {
                                     )}
                                     
                                     {plan.benefits && (
-                                        <p className="text-xs text-green-600 dark:text-green-400 text-center font-medium">
+                                        <p className="text-xs text-primary text-center font-medium">
                                             {plan.benefits}
                                         </p>
                                     )}
@@ -376,19 +376,19 @@ export default function Suscripcion() {
                         <CardContent>
                             <div className="space-y-3">
                                 <div className="flex items-center gap-3">
-                                    <Video className="w-4 h-4 text-blue-500" />
+                                    <Video className="w-4 h-4" />
                                     <span className="text-sm">Videollamada mensual con psicólogo deportivo</span>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <Target className="w-4 h-4 text-green-500" />
+                                    <Target className="w-4 h-4" />
                                     <span className="text-sm">Acceso completo a todos los 6 niveles</span>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <Trophy className="w-4 h-4 text-yellow-500" />
+                                    <Trophy className="w-4 h-4" />
                                     <span className="text-sm">Sistema completo de logros y gamificación</span>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <Calendar className="w-4 h-4 text-purple-500" />
+                                    <Calendar className="w-4 h-4" />
                                     <span className="text-sm">Planes de entrenamiento personalizados</span>
                                 </div>
                             </div>

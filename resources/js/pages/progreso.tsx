@@ -39,11 +39,11 @@ const weeklyStats = [
 ];
 
 const skillProgress = [
-    { skill: 'Confianza', current: 85, target: 90, color: 'bg-blue-500' },
-    { skill: 'Control de Ansiedad', current: 72, target: 85, color: 'bg-green-500' },
-    { skill: 'Concentración', current: 60, target: 80, color: 'bg-purple-500' },
-    { skill: 'Motivación', current: 45, target: 75, color: 'bg-orange-500' },
-    { skill: 'Manejo de Presión', current: 30, target: 70, color: 'bg-red-500' },
+    { skill: 'Confianza', current: 85, target: 90 },
+    { skill: 'Control de Ansiedad', current: 72, target: 85 },
+    { skill: 'Concentración', current: 60, target: 80 },
+    { skill: 'Motivación', current: 45, target: 75 },
+    { skill: 'Manejo de Presión', current: 30, target: 70 },
 ];
 
 const recentActivities = [
@@ -89,7 +89,7 @@ export default function Progreso() {
                 {/* Header */}
                 <div className="flex flex-col gap-2">
                     <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
-                        <TrendingUp className="w-8 h-8 text-blue-600" />
+                        <TrendingUp className="w-8 h-8" />
                         Mi Progreso
                     </h1>
                     <p className="text-muted-foreground">
@@ -98,7 +98,7 @@ export default function Progreso() {
                 </div>
 
                 {/* Level Progress Card */}
-                <Card className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10">
+                <Card>
                     <CardHeader>
                         <div className="flex items-center justify-between">
                             <div>
@@ -258,7 +258,7 @@ export default function Progreso() {
                                         <div className="text-xs text-muted-foreground">sesiones</div>
                                     </div>
                                     <div className="space-y-1">
-                                        <div className="text-sm font-medium text-purple-600">{week.xp} XP</div>
+                                        <div className="text-sm font-medium text-primary">{week.xp} XP</div>
                                         <div className="text-xs text-muted-foreground">ganados</div>
                                     </div>
                                 </div>

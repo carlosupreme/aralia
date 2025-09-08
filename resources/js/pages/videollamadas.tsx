@@ -114,7 +114,7 @@ export default function Videollamadas() {
                 {/* Header */}
                 <div className="flex flex-col gap-2">
                     <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
-                        <Video className="w-8 h-8 text-blue-600" />
+                        <Video className="w-8 h-8" />
                         Videollamadas con tu Psicólogo
                     </h1>
                     <p className="text-muted-foreground">
@@ -175,14 +175,14 @@ export default function Videollamadas() {
                     <div className="lg:col-span-2 space-y-6">
                         {/* Next Call */}
                         {nextCall && (
-                            <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10">
+                            <Card>
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
                                         <CardTitle className="flex items-center gap-2">
-                                            <AlertCircle className="w-5 h-5 text-blue-600" />
+                                            <AlertCircle className="w-5 h-5" />
                                             Próxima Videollamada
                                         </CardTitle>
-                                        <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
+                                        <Badge variant="outline">
                                             En {Math.ceil((new Date(nextCall.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} días
                                         </Badge>
                                     </div>
@@ -286,7 +286,7 @@ export default function Videollamadas() {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                                    <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center font-bold">
                                         MG
                                     </div>
                                     <div>

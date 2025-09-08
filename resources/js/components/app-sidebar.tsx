@@ -138,20 +138,20 @@ export function AppSidebar() {
 
                 {/* Gamification Status - Solo para estudiantes */}
                 {userRole === 'student' && (
-                    <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg mx-3 mt-2">
+                    <div className="px-4 py-3 bg-muted/50 rounded-lg mx-3 mt-2">
                         <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
-                                <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                                <Star className="w-4 h-4" />
                                 <span className="text-sm font-medium">Nivel {currentLevel}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                                <Trophy className="w-3 h-3 text-orange-500" />
+                                <Trophy className="w-3 h-3" />
                                 <span className="text-xs text-muted-foreground">{totalAchievements}</span>
                             </div>
                         </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-1">
+                        <div className="w-full bg-muted rounded-full h-2 mb-1">
                             <div 
-                                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                                className="bg-primary h-2 rounded-full transition-all duration-300"
                                 style={{ width: `${progressToNextLevel}%` }}
                             ></div>
                         </div>
