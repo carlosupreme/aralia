@@ -2,7 +2,7 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { dashboard, progreso, niveles, multimedia, videollamadas, logros, manual, soporte } from '@/routes';
+import { dashboard, progreso, niveles, multimedia, videollamadas, logros, suscripcion, manual, soporte } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { 
@@ -56,6 +56,11 @@ const mainNavItems: NavItem[] = [
         title: 'Logros',
         href: logros(),
         icon: Trophy,
+    },
+    {
+        title: 'Suscripción',
+        href: suscripcion(),
+        icon: CreditCard,
     },
 ];
 
@@ -125,13 +130,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
                             <Link href={dashboard()} prefetch>
-                                <div className="flex items-center gap-2">
-                                    <AppLogo />
-                                    <div className="flex flex-col items-start">
-                                        <span className="text-sm font-semibold">MenteSport</span>
-                                        <span className="text-xs text-muted-foreground">Psicología Deportiva</span>
-                                    </div>
-                                </div>
+                                <AppLogo />
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>

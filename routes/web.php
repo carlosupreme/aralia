@@ -33,6 +33,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('logros');
     })->name('logros');
 
+    Route::get('suscripcion', function () {
+        return Inertia::render('suscripcion');
+    })->name('suscripcion');
+
     // Admin Routes (for psychologists)
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('usuarios', function () {

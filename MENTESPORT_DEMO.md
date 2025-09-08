@@ -56,6 +56,7 @@ MenteSport es una aplicación demo de psicología deportiva diseñada para jóve
 - `/multimedia` - Biblioteca de contenido educativo
 - `/videollamadas` - Gestión de sesiones con el psicólogo
 - `/logros` - Galería de achievements desbloqueados
+- `/suscripcion` - Gestión de planes y facturación
 
 ### Páginas Administrativas (Psicólogos)
 - `/admin/usuarios` - Gestión de usuarios

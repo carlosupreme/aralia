@@ -84,7 +84,7 @@ export default function Progreso() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Mi Progreso - MenteSport" />
+            <Head title="Mi Progreso - Psicología para el deporte" />
             <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto p-6">
                 {/* Header */}
                 <div className="flex flex-col gap-2">

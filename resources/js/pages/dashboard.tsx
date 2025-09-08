@@ -150,7 +150,7 @@ export default function Dashboard() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard - MenteSport" />
+            <Head title="Dashboard - Psicología para el deporte" />
             <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto p-6">
                 {/* Header con saludo personalizado */}
                 <div className="flex flex-col gap-2">
