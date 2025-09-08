@@ -2,7 +2,7 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard, progreso, niveles, multimedia, videollamadas, logros, manual, soporte } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { 
@@ -34,27 +34,27 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Mi Progreso',
-        href: '/progreso',
+        href: progreso(),
         icon: TrendingUp,
     },
     {
         title: 'Niveles',
-        href: '/niveles',
+        href: niveles(),
         icon: Target,
     },
     {
         title: 'Contenido Multimedia',
-        href: '/multimedia',
+        href: multimedia(),
         icon: Play,
     },
     {
         title: 'Videollamadas',
-        href: '/videollamadas',
+        href: videollamadas(),
         icon: Video,
     },
     {
         title: 'Logros',
-        href: '/logros',
+        href: logros(),
         icon: Trophy,
     },
 ];
@@ -101,12 +101,12 @@ const adminNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
     {
         title: 'Manual de Usuario',
-        href: '/manual',
+        href: manual(),
         icon: BookOpen,
     },
     {
         title: 'Soporte Técnico',
-        href: '/soporte',
+        href: soporte(),
         icon: Folder,
     },
 ];
