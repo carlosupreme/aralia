@@ -4,12 +4,12 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard, progreso, niveles, multimedia, videollamadas, logros, suscripcion, manual, soporte } from '@/routes';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { 
-    BookOpen, 
-    Folder, 
-    LayoutGrid, 
-    Users, 
+import { Link, usePage } from '@inertiajs/react';
+import {
+    BookOpen,
+    Folder,
+    LayoutGrid,
+    Users,
     UserCheck,
     GraduationCap,
     Trophy,
@@ -117,11 +117,34 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-    // Mock user role - en una app real esto vendría del auth context
-    const userRole = 'student'; // 'student', 'parent', 'psychologist'
-    const currentLevel = 3; // Nivel actual del estudiante (gamificación)
-    const totalAchievements = 12; // Logros desbloqueados
-    const progressToNextLevel = 65; // Porcentaje de progreso al siguiente nivel
+    // Obtener datos del usuario desde Inertia
+    const { auth } = usePage<{
+        auth: {
+            user: {
+                id: number;
+                name: string;
+                email: string;
+                roles: string[];
+                permissions: string[];
+                gamification?: {
+                    current_level: number;
+                    total_achievements: number;
+                    progress_to_next_level: number;
+                };
+            } | null;
+        };
+    }>().props;
+
+    const user = auth.user;
+
+    // Verificar roles
+    const isStudent = user?.roles.includes('student');
+    const isPsychologist = user?.roles.includes('psychologist');
+
+    // Datos de gamificación
+    const currentLevel = user?.gamification?.current_level ?? 1;
+    const totalAchievements = user?.gamification?.total_achievements ?? 0;
+    const progressToNextLevel = user?.gamification?.progress_to_next_level ?? 0;
 
     return (
         <Sidebar collapsible="icon" variant="inset">
@@ -137,7 +160,7 @@ export function AppSidebar() {
                 </SidebarMenu>
 
                 {/* Gamification Status - Solo para estudiantes */}
-                {userRole === 'student' && (
+                {isStudent && user?.gamification && (
                     <div className="px-4 py-3 bg-muted/50 rounded-lg mx-3 mt-2">
                         <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
@@ -150,7 +173,7 @@ export function AppSidebar() {
                             </div>
                         </div>
                         <div className="w-full bg-muted rounded-full h-2 mb-1">
-                            <div 
+                            <div
                                 className="bg-primary h-2 rounded-full transition-all duration-300"
                                 style={{ width: `${progressToNextLevel}%` }}
                             ></div>
@@ -163,8 +186,8 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                {/* Navegación para Estudiantes/Padres */}
-                {(userRole === 'student' || userRole === 'parent') && (
+                {/* Navegación para Estudiantes */}
+                {isStudent && (
                     <>
                         <div className="px-4 py-2">
                             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -176,7 +199,7 @@ export function AppSidebar() {
                 )}
 
                 {/* Navegación para Psicólogos */}
-                {userRole === 'psychologist' && (
+                {isPsychologist && (
                     <>
                         <div className="px-4 py-2">
                             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -184,7 +207,7 @@ export function AppSidebar() {
                             </h3>
                         </div>
                         <NavMain items={mainNavItems} />
-                        
+
                         <div className="px-4 py-2 mt-4">
                             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                                 Administración
