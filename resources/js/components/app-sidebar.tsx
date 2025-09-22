@@ -186,20 +186,8 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                {/* Navegación para Estudiantes */}
+                {/* Navegación para Estudiantes - Panel de Estudiantes */}
                 {isStudent && (
-                    <>
-                        <div className="px-4 py-2">
-                            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                                Mi Área de Entrenamiento
-                            </h3>
-                        </div>
-                        <NavMain items={mainNavItems} />
-                    </>
-                )}
-
-                {/* Navegación para Psicólogos */}
-                {isPsychologist && (
                     <>
                         <div className="px-4 py-2">
                             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -207,8 +195,13 @@ export function AppSidebar() {
                             </h3>
                         </div>
                         <NavMain items={mainNavItems} />
+                    </>
+                )}
 
-                        <div className="px-4 py-2 mt-4">
+                {/* Navegación para Psicólogos - Administración */}
+                {isPsychologist && (
+                    <>
+                        <div className="px-4 py-2">
                             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                                 Administración
                             </h3>
