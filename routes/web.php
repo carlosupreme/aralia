@@ -5,6 +5,10 @@ use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\MultimediaController;
+use App\Http\Controllers\FileUploadController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -34,6 +38,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('comunicacion', [AdminController::class, 'comunicacion'])->name('comunicacion');
         Route::get('citas', [AdminController::class, 'citas'])->name('citas');
     });
+
+    // Program management routes
+    Route::resource('programs', ProgramController::class);
+    Route::post('programs/{program}/enroll', [ProgramController::class, 'enrollStudent'])->name('programs.enroll');
+    Route::delete('programs/{program}/students/{student}', [ProgramController::class, 'removeStudent'])->name('programs.remove-student');
+
+    // Level management routes (nested under programs)
+    Route::resource('programs.levels', LevelController::class)->shallow();
+    Route::get('levels/{level}/learn', [LevelController::class, 'studentView'])->name('levels.learn');
+    Route::post('levels/{level}/unlock/{student}', [LevelController::class, 'unlockForStudent'])->name('levels.unlock');
+    Route::post('levels/{level}/complete/{student}', [LevelController::class, 'markComplete'])->name('levels.complete');
+
+    // Multimedia management routes (nested under levels)
+    Route::resource('levels.multimedia', MultimediaController::class)->shallow();
+
+    // File upload routes
+    Route::post('upload/file', [FileUploadController::class, 'upload'])->name('upload.file');
+    Route::delete('upload/file', [FileUploadController::class, 'delete'])->name('upload.delete');
+    Route::get('upload/info', [FileUploadController::class, 'info'])->name('upload.info');
 
     // Rutas de soporte (accesibles por ambos roles)
     Route::get('manual', function () {

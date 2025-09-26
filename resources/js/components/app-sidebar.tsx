@@ -83,7 +83,7 @@ const adminNavItems: NavItem[] = [
     },
     {
         title: 'Programas y Planes',
-        href: '/admin/programas',
+        href: '/programs',
         icon: BookMarked,
     },
     {
