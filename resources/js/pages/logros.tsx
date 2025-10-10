@@ -7,8 +7,8 @@ import AppLayout from '@/layouts/app-layout';
 import { dashboard, logros } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { 
-    Trophy, 
+import {
+    Trophy,
     Star,
     Target,
     Zap,
@@ -53,7 +53,7 @@ const allAchievements = [
     },
     {
         id: '3',
-        title: 'Estudiante Dedicado',
+        title: 'Deportista Dedicado',
         description: 'Completa 5 sesiones de entrenamiento',
         icon: 'trophy' as const,
         rarity: 'common' as const,
@@ -173,30 +173,30 @@ const categories = [
 ];
 
 const rarityStats = [
-    { 
-        rarity: 'common', 
-        name: 'Común', 
+    {
+        rarity: 'common',
+        name: 'Común',
         count: allAchievements.filter(a => a.rarity === 'common').length,
         unlocked: allAchievements.filter(a => a.rarity === 'common' && a.unlocked).length,
         color: 'text-muted-foreground'
     },
-    { 
-        rarity: 'rare', 
-        name: 'Raro', 
+    {
+        rarity: 'rare',
+        name: 'Raro',
         count: allAchievements.filter(a => a.rarity === 'rare').length,
         unlocked: allAchievements.filter(a => a.rarity === 'rare' && a.unlocked).length,
         color: 'text-primary'
     },
-    { 
-        rarity: 'epic', 
-        name: 'Épico', 
+    {
+        rarity: 'epic',
+        name: 'Épico',
         count: allAchievements.filter(a => a.rarity === 'epic').length,
         unlocked: allAchievements.filter(a => a.rarity === 'epic' && a.unlocked).length,
         color: 'text-foreground'
     },
-    { 
-        rarity: 'legendary', 
-        name: 'Legendario', 
+    {
+        rarity: 'legendary',
+        name: 'Legendario',
         count: allAchievements.filter(a => a.rarity === 'legendary').length,
         unlocked: allAchievements.filter(a => a.rarity === 'legendary' && a.unlocked).length,
         color: 'text-primary'
@@ -244,14 +244,14 @@ export default function Logros() {
                                         <div className="text-sm text-muted-foreground capitalize">
                                             {stat.name}
                                         </div>
-                                        <Progress 
-                                            value={(stat.unlocked / stat.count) * 100} 
-                                            className="mt-2 h-2" 
+                                        <Progress
+                                            value={(stat.unlocked / stat.count) * 100}
+                                            className="mt-2 h-2"
                                         />
                                     </div>
                                 ))}
                             </div>
-                            
+
                             <div className="space-y-2">
                                 <div className="flex justify-between items-center">
                                     <span className="font-medium">Progreso Total</span>
@@ -279,7 +279,7 @@ export default function Logros() {
                             </Button>
                         ))}
                     </div>
-                    
+
                     <div className="relative w-full sm:w-auto">
                         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
@@ -301,8 +301,8 @@ export default function Logros() {
                             {allAchievements
                                 .filter(achievement => achievement.unlocked)
                                 .map((achievement) => (
-                                    <GamificationCard 
-                                        key={achievement.id} 
+                                    <GamificationCard
+                                        key={achievement.id}
                                         achievement={achievement}
                                     />
                                 ))}
@@ -319,8 +319,8 @@ export default function Logros() {
                             {allAchievements
                                 .filter(achievement => !achievement.unlocked && achievement.progress)
                                 .map((achievement) => (
-                                    <GamificationCard 
-                                        key={achievement.id} 
+                                    <GamificationCard
+                                        key={achievement.id}
                                         achievement={achievement}
                                     />
                                 ))}
@@ -337,8 +337,8 @@ export default function Logros() {
                             {allAchievements
                                 .filter(achievement => !achievement.unlocked && !achievement.progress)
                                 .map((achievement) => (
-                                    <GamificationCard 
-                                        key={achievement.id} 
+                                    <GamificationCard
+                                        key={achievement.id}
                                         achievement={achievement}
                                     />
                                 ))}
@@ -367,7 +367,7 @@ export default function Logros() {
                                     </p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-start gap-3">
                                 <div className="p-2 bg-muted rounded-full">
                                     <Star className="w-4 h-4" />
@@ -379,7 +379,7 @@ export default function Logros() {
                                     </p>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-start gap-3">
                                 <div className="p-2 bg-muted rounded-full">
                                     <Trophy className="w-4 h-4" />

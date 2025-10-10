@@ -8,12 +8,12 @@ import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { 
-    TrendingUp, 
-    Calendar, 
-    Video, 
-    Trophy, 
-    Target, 
+import {
+    TrendingUp,
+    Calendar,
+    Video,
+    Trophy,
+    Target,
     Star,
     BookOpen,
     Clock,
@@ -24,7 +24,7 @@ import {
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Generalidades',
         href: dashboard().url,
     },
 ];
@@ -180,20 +180,20 @@ export default function Dashboard() {
 
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Experiencia Total</CardTitle>
+                            <CardTitle className="text-sm font-medium">Tus superpoderes como deportistas</CardTitle>
                             <Star className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{totalXP.toLocaleString()} XP</div>
                             <p className="text-xs text-muted-foreground">
-                                +150 XP esta semana
+                                +150 Super puntos esta semana
                             </p>
                         </CardContent>
                     </Card>
 
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Meta Semanal</CardTitle>
+                            <CardTitle className="text-sm font-medium">Objetivo Semanal</CardTitle>
                             <TrendingUp className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
@@ -236,7 +236,7 @@ export default function Dashboard() {
                                 Ver Todos
                             </Button>
                         </div>
-                        
+
                         <div className="grid gap-4 md:grid-cols-2">
                             {mockLevels.slice(0, 4).map((level) => (
                                 <LevelCard key={level.id} level={level} />
@@ -254,17 +254,17 @@ export default function Dashboard() {
                                     Logros Recientes
                                 </h2>
                             </div>
-                            
+
                             <div className="space-y-3">
                                 {mockAchievements.slice(0, 3).map((achievement) => (
-                                    <GamificationCard 
-                                        key={achievement.id} 
+                                    <GamificationCard
+                                        key={achievement.id}
                                         achievement={achievement}
                                         className="h-auto"
                                     />
                                 ))}
                             </div>
-                            
+
                             <Button variant="outline" className="w-full mt-3">
                                 Ver Todos los Logros
                             </Button>

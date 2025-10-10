@@ -72,12 +72,12 @@ const adminNavItems: NavItem[] = [
         icon: Users,
     },
     {
-        title: 'Estudiantes',
-        href: '/admin/estudiantes',
+        title: 'Deportistas Ganadores',
+        href: '/admin/deportistas',
         icon: GraduationCap,
     },
     {
-        title: 'Padres de Familia',
+        title: 'Familias Ganadoras',
         href: '/admin/padres',
         icon: UserCheck,
     },
