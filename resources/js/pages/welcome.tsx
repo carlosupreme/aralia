@@ -22,9 +22,7 @@ export default function Welcome() {
                 <header className="sticky top-0 z-50 w-full border-b border-[#19140035] bg-white/80 backdrop-blur-sm dark:border-[#3E3E3A] dark:bg-[#0a0a0a]/80">
                     <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
                         <div className="flex items-center">
-              <span className="text-xl font-semibold text-[#f53003] dark:text-[#FF4433]">
-                    psiclogias
-              </span>
+                            <img src="/images/logo-empresa.jpeg" alt="" className="mx-auto h-8 pr-1" />
                         </div>
                         <div className="flex items-center gap-4">
                             {auth.user ? (
@@ -40,13 +38,13 @@ export default function Welcome() {
                                         href="/login"
                                         className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
                                     >
-                                        Log in
+                                        Iniciar sesión
                                     </Link>
                                     <Link
                                         href="/register"
                                         className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
                                     >
-                                        Register
+                                        Registrarse
                                     </Link>
                                 </>
                             )}
@@ -55,32 +53,28 @@ export default function Welcome() {
                 </header>
 
                 {/* Hero Section */}
-                <section className="relative overflow-hidden bg-gradient-to-b from-white to-[#FDFDFC] px-6 py-20 dark:from-[#0a0a0a] dark:to-[#161615] lg:px-8 lg:py-32">
+                <section className="relative overflow-hidden bg-gradient-to-b from-white to-[#FDFDFC] px-6 py-20 lg:px-8 lg:py-32 dark:from-[#0a0a0a] dark:to-[#161615]">
                     <div className="mx-auto max-w-7xl">
                         <div className="grid items-center gap-12 lg:grid-cols-2">
                             <div className="space-y-6">
-                                <h1 className="text-4xl font-semibold leading-tight lg:text-6xl">
-                                    Psicología para la vida y para el{' '}
-                                    <span className="text-[#055c9d] dark:text-[#055c9d]">deporte</span>
+                                <h1 className="text-4xl leading-tight font-semibold lg:text-6xl">
+                                    Psicología para la vida y para el <span className="text-[#055c9d] dark:text-[#055c9d]">deporte</span>
                                 </h1>
                                 <p className="text-lg text-[#706f6c] dark:text-[#A1A09A]">
-                                    Potencía el rendimiento de los deportistas a través
-                                    del desarrollo de habilidades mentales y
-                                    emocionales, ofreciendo servicios de entrenamiento
-                                    mental personalizados y en grupo que promuevan la
-                                    salud mental como base fundamental del éxito
-                                    deportivo.
+                                    Potencía el rendimiento de los deportistas a través del desarrollo de habilidades mentales y emocionales,
+                                    ofreciendo servicios de entrenamiento mental personalizados y en grupo que promuevan la salud mental como base
+                                    fundamental del éxito deportivo.
                                 </p>
                                 <div className="flex flex-wrap gap-4">
                                     <Link
                                         href="/register"
-                                        className="inline-block rounded-sm border border-black bg-[#1b1b18] px-6 py-3 text-sm font-medium leading-normal text-white hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white"
+                                        className="inline-block rounded-sm border border-black bg-[#1b1b18] px-6 py-3 text-sm leading-normal font-medium text-white hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white"
                                     >
                                         Formar parte
                                     </Link>
                                     <Link
                                         href="#about"
-                                        className="inline-block rounded-sm border border-[#19140035] px-6 py-3 text-sm font-medium leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
+                                        className="inline-block rounded-sm border border-[#19140035] px-6 py-3 text-sm leading-normal font-medium text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
                                     >
                                         Conocer más
                                     </Link>
@@ -89,18 +83,12 @@ export default function Welcome() {
 
                             {/* Hero Image */}
                             <div className="relative">
-                                <div className="aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-[#f53003]/10 to-[#ff9966]/10 p-8 shadow-2xl dark:from-[#FF4433]/10 dark:to-[#ff9966]/10">
-                                    <svg
-                                        className="h-full w-full text-[#f53003] dark:text-[#FF4433]"
-                                        viewBox="0 0 200 200"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="2" opacity="0.2" />
-                                        <circle cx="100" cy="100" r="60" stroke="currentColor" strokeWidth="2" opacity="0.4" />
-                                        <circle cx="100" cy="100" r="40" stroke="currentColor" strokeWidth="2" opacity="0.6" />
-                                        <circle cx="100" cy="100" r="20" fill="currentColor" opacity="0.8" />
-                                    </svg>
+                                <div className="order-1 lg:order-2">
+                                    <img
+                                        src="/images/doodle.png"
+                                        alt="About our platform"
+                                        className="aspect-square w-full overflow-hidden rounded-lg object-cover"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -111,38 +99,42 @@ export default function Welcome() {
                 <section className="px-6 py-20 lg:px-8">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-16 text-center">
-                            <h2 className="mb-4 text-3xl font-semibold lg:text-5xl">
-                                ¿Por qué entrenar tu mente con nosotros?
-                            </h2>
+                            <h2 className="mb-4 text-3xl font-semibold lg:text-5xl">¿Por qué entrenar tu mente con nosotros?</h2>
                             <p className="text-lg text-[#706f6c] dark:text-[#A1A09A]">
-                                Buscamos que la salud mental sea una pieza clave
-                                en el camino hacia el rendimiento exitoso.
+                                Buscamos que la salud mental sea una pieza clave en el camino hacia el rendimiento exitoso.
                             </p>
                         </div>
 
                         <div className="grid gap-8 md:grid-cols-3">
                             {[
                                 {
-                                    title: 'Experiencia',
-                                    description: 'Write clean, expressive code that is easy to read and maintain.',
-                                    color: 'from-blue-500/10 to-cyan-500/10'
+                                    title: 'Fortaleza mental que marca la diferencia',
+                                    description:
+                                        'Te ayudamos a desarrollar resiliencia, enfoque y control emocional, para que puedas rendir al máximo incluso bajo presión.\n' +
+                                        'Entrena tu mente igual que entrenas tu cuerpo.',
+                                    image: '/images/ceni.jpeg',
                                 },
                                 {
-                                    title: 'Powerful Tools',
-                                    description: 'Built-in authentication, routing, sessions, and caching out of the box.',
-                                    color: 'from-purple-500/10 to-pink-500/10'
+                                    title: 'Experiencia en múltiples deportes',
+                                    description:
+                                        'Cada deporte tiene su propio ritmo, dinámica y desafíos.\n' +
+                                        'Hemos acompañado a atletas de diversas disciplinas que significa contar con estrategias adaptadas a tu entorno ' +
+                                        'competitivo y una visión integral que potencia tu desempeño dentro y fuera del campo.',
+                                    image: '/images/filial.jpeg',
                                 },
                                 {
-                                    title: 'Vibrant Ecosystem',
-                                    description: 'Access to thousands of packages and a supportive community.',
-                                    color: 'from-orange-500/10 to-red-500/10'
-                                }
+                                    title: 'Bienestar integral y equilibrio personal',
+                                    description:
+                                        'El éxito deportivo no debe costarte tu salud mental.\n' +
+                                        'Sabemos detectar signos de estrés, agotamiento o frustración, y te guíamos hacia un equilibrio entre tu vida personal y tus metas competitivas.',
+                                    image: '/images/panteras.jpeg',
+                                },
                             ].map((feature, index) => (
                                 <div
                                     key={index}
                                     className="group overflow-hidden rounded-lg border border-[#e3e3e0] bg-white p-6 shadow-sm transition-all hover:shadow-lg dark:border-[#3E3E3A] dark:bg-[#161615]"
                                 >
-                                    <div className={`mb-4 aspect-video rounded-lg bg-gradient-to-br ${feature.color}`}></div>
+                                    <img src={feature.image} alt={feature.title} className="mb-4 aspect-video w-full rounded-lg object-cover" />
                                     <h3 className="mb-2 text-xl font-medium">{feature.title}</h3>
                                     <p className="text-[#706f6c] dark:text-[#A1A09A]">{feature.description}</p>
                                 </div>
@@ -152,42 +144,48 @@ export default function Welcome() {
                 </section>
 
                 {/* About Us Section */}
-                <section id="about" className="bg-white px-6 py-20 dark:bg-[#161615] lg:px-8">
+                <section id="about" className="bg-white px-6 py-20 lg:px-8 dark:bg-[#161615]">
                     <div className="mx-auto max-w-7xl">
                         <div className="grid items-center gap-12 lg:grid-cols-2">
                             <div className="order-2 lg:order-1">
-                                <h2 className="mb-6 text-3xl font-semibold lg:text-5xl">
-                                    About Our Platform
-                                </h2>
+                                <h2 className="mb-6 text-3xl font-semibold lg:text-5xl">Sobre nosotros</h2>
                                 <div className="space-y-4 text-[#706f6c] dark:text-[#A1A09A]">
                                     <p>
-                                        We've been helping developers build exceptional applications since our inception. Our platform combines the power of Laravel with modern development practices to deliver outstanding results.
+                                        Buscamos promover un espacio propicio para la comunión consciente de mente y cuerpo. Donde los sentidos, contrario a
+                                        todas las creencias, en lugar de estar dormidos están más despiertos que nunca.
                                     </p>
                                     <p>
-                                        With thousands of successful projects and a growing community of developers, we're committed to providing the best tools and resources for your development journey.
+                                        Trabajamos de forma individual o grupal utilizando herramientas de hipnosis y programación neurolingüística para el manejo
+                                        del estrés, autoestima y clarificación de metas.Brindamos ejercicios de visualización creativa y relajación para
+                                        generar y enaltecer emociones de seguridad y confianza.
                                     </p>
-                                    <p>
-                                        Whether you're building a simple blog or a complex enterprise application, our platform scales with your needs and provides the support you deserve.
-                                    </p>
+                                    <p>  A través de ejercicios de relajación se les ayudará a
+                                        visualizar paso a paso su competencia y retos físicos y mentales para así desempeñarse con mayor confianza y
+                                        enfoque al momento de su evento. Promovemos el desempeño físico y mental para optimizar desempeño y resultados.</p>
+
                                 </div>
                                 <div className="mt-8 grid grid-cols-3 gap-6">
                                     <div>
-                                        <div className="text-3xl font-semibold text-[#f53003] dark:text-[#FF4433]">10K+</div>
-                                        <div className="text-sm text-[#706f6c] dark:text-[#A1A09A]">Active Users</div>
+                                        <div className="text-3xl font-semibold text-[#055c9d] dark:text-[#055c9d]">10+</div>
+                                        <div className="text-sm text-[#706f6c] dark:text-[#A1A09A]">Equipos Activos</div>
                                     </div>
                                     <div>
-                                        <div className="text-3xl font-semibold text-[#f53003] dark:text-[#FF4433]">50K+</div>
-                                        <div className="text-sm text-[#706f6c] dark:text-[#A1A09A]">Projects</div>
+                                        <div className="text-3xl font-semibold text-[#055c9d] dark:text-[#055c9d]">20+</div>
+                                        <div className="text-sm text-[#706f6c] dark:text-[#A1A09A]">Proyectos</div>
                                     </div>
                                     <div>
-                                        <div className="text-3xl font-semibold text-[#f53003] dark:text-[#FF4433]">99.9%</div>
-                                        <div className="text-sm text-[#706f6c] dark:text-[#A1A09A]">Uptime</div>
+                                        <div className="text-3xl font-semibold text-[#055c9d] dark:text-[#055c9d]">99.9%</div>
+                                        <div className="text-sm text-[#706f6c] dark:text-[#A1A09A]">Satisfacción</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="order-1 lg:order-2">
-                                <div className="aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-[#f53003]/20 to-[#ff9966]/20 shadow-2xl dark:from-[#FF4433]/20 dark:to-[#ff9966]/20"></div>
+                                <img
+                                    src="/images/psics.jpeg"
+                                    alt="About our platform"
+                                    className="aspect-square w-full overflow-hidden rounded-lg object-cover shadow-2xl"
+                                />
                             </div>
                         </div>
                     </div>
@@ -197,103 +195,100 @@ export default function Welcome() {
                 <section className="px-6 py-20 lg:px-8">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-16 text-center">
-                            <h2 className="mb-4 text-3xl font-semibold lg:text-5xl">
-                                Simple, Transparent Pricing
-                            </h2>
-                            <p className="text-lg text-[#706f6c] dark:text-[#A1A09A]">
-                                Choose the plan that fits your needs
-                            </p>
+                            <h2 className="mb-4 text-3xl font-semibold lg:text-5xl">Servicios que ofrecemos</h2>
+                            <p className="text-lg text-[#706f6c] dark:text-[#A1A09A]">Elige el plan que se adecue a tus necesidades</p>
                         </div>
 
                         <div className="grid gap-8 lg:grid-cols-3">
                             {[
                                 {
-                                    name: 'Starter',
-                                    price: '$9',
-                                    description: 'Perfect for small projects and learning',
+                                    name: 'Pláticas y talleres',
+                                    price: '$150 mxn / padre',
+                                    description: 'Para padres de familia y entrenadores',
                                     features: [
-                                        '5 Projects',
-                                        '10GB Storage',
-                                        'Basic Support',
-                                        'SSL Certificate',
-                                        'Daily Backups'
+                                        'Si eres madre, padre o entrenador obtendrás\n' +
+                                            'herramientas efectivas para ayudar a tu\n' +
+                                            'deportista a lograrlo mientras desbloqueas tu\n' +
+                                            'propio potencial\n',
+                                        '6 Platicas con padres de familia de acuerdo\n' + 'al plan de trabajo del entrenador',
                                     ],
-                                    featured: false
+                                    featured: false,
                                 },
                                 {
-                                    name: 'Professional',
-                                    price: '$29',
-                                    description: 'Best for growing businesses',
+                                    name: 'Entrenamiento mental individual',
+                                    price: '$1700 mxn / mes',
+                                    description: 'Lo mejor para deportistas de alto rendimiento',
                                     features: [
-                                        '25 Projects',
-                                        '100GB Storage',
-                                        'Priority Support',
-                                        'SSL Certificate',
-                                        'Hourly Backups',
-                                        'CDN Integration',
-                                        'Advanced Analytics'
+                                        'Intervención psicológica con el deportista\n' +
+                                            'Con toda la información de la evaluación\n' +
+                                            'marcaremos los objetivos, diseñaré el plan de\n' +
+                                            'entrenamiento y programaremos las sesiones\n' +
+                                            'de trabajo,\n',
+                                        'La primera sesión tiene una duración de 50 a\n' +
+                                            '60 min , posterior a esto las intervenciones de\n' +
+                                            '20- 35 min , las veces que sean necesarias de\n' +
+                                            'acuerdo a los avances que se hagan con el\n' +
+                                            'deportista.',
+                                        'El número de sesiones va dependiendo de las\n' + 'necesidades del deportista.',
+                                        'Trabajo multidisciplinario con padres de\n' + 'familia, entrenador o profesional del deporte',
+                                        'De manera bimestral, se hace entrega de un\n' +
+                                            'informe para el atleta , padre de familia y\n' +
+                                            'entrenador.',
                                     ],
-                                    featured: true
+                                    featured: true,
                                 },
                                 {
-                                    name: 'Enterprise',
-                                    price: '$99',
-                                    description: 'For large-scale applications',
+                                    name:
+                                        'Entrenamiento mental para deportistas dentro de un convenio',
+                                    price: '$100 mxn / atleta',
+                                    description: 'Para escuelas o clubs deportivos',
                                     features: [
-                                        'Unlimited Projects',
-                                        '1TB Storage',
-                                        '24/7 Dedicated Support',
-                                        'SSL Certificate',
-                                        'Real-time Backups',
-                                        'CDN Integration',
-                                        'Advanced Analytics',
-                                        'Custom Integrations',
-                                        'SLA Guarantee'
+                                        'Ofrecemos un convenio de entrenamiento\n' +
+                                            'mental el cual consta de sesiones grupales en la\n' +
+                                            'que los atletas desarrollarán habilidades clave\n' +
+                                            'como la gestión del estrés, concentración,\n' +
+                                            'resiliencia y trabajo en equipo, adaptadas a sus\n' +
+                                            'necesidades y etapa de desarrollo.',
+                                        '6 talleres para deportistas de acuerdo al plan\n' + 'de trabajo del entrenador',
+
                                     ],
-                                    featured: false
-                                }
+                                    featured: false,
+                                },
                             ].map((plan, index) => (
                                 <div
                                     key={index}
                                     className={`relative overflow-hidden rounded-lg border p-8 transition-all ${
                                         plan.featured
-                                            ? 'border-[#f53003] bg-gradient-to-b from-white to-[#f53003]/5 shadow-xl dark:border-[#FF4433] dark:from-[#161615] dark:to-[#FF4433]/5'
+                                            ? 'border-[#055c9d] bg-gradient-to-b from-white to-[#f53003]/5 shadow-xl dark:border-[#055c9d] dark:from-[#161615] dark:to-[#FF4433]/5'
                                             : 'border-[#e3e3e0] bg-white shadow-sm hover:shadow-lg dark:border-[#3E3E3A] dark:bg-[#161615]'
                                     }`}
                                 >
                                     {plan.featured && (
-                                        <div className="absolute right-4 top-4 rounded-full bg-[#f53003] px-3 py-1 text-xs font-medium text-white dark:bg-[#FF4433]">
+                                        <div className="absolute top-4 right-4 rounded-full bg-[#055c9d] px-3 py-1 text-xs font-medium text-white dark:bg-[#055c9d]">
                                             Popular
                                         </div>
                                     )}
 
                                     <div className="mb-6">
                                         <h3 className="mb-2 text-2xl font-semibold">{plan.name}</h3>
-                                        <p className="text-sm text-[#706f6c] dark:text-[#A1A09A]">
-                                            {plan.description}
-                                        </p>
+                                        <p className="text-sm text-[#706f6c] dark:text-[#A1A09A]">{plan.description}</p>
                                     </div>
 
                                     <div className="mb-6">
-                                        <span className="text-5xl font-semibold">{plan.price}</span>
-                                        <span className="text-[#706f6c] dark:text-[#A1A09A]">/month</span>
+                                        <span className="text-3xl font-semibold">{plan.price}</span>
+                                        <span className="text-[#706f6c] dark:text-[#A1A09A]"></span>
                                     </div>
 
                                     <ul className="mb-8 space-y-3">
                                         {plan.features.map((feature, featureIndex) => (
                                             <li key={featureIndex} className="flex items-start gap-3">
                                                 <svg
-                                                    className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#f53003] dark:text-[#FF4433]"
+                                                    className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#055c9d] dark:text-[#055c9d]"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
                                                 >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M5 13l4 4L19 7"
-                                                    />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
                                                 <span className="text-sm">{feature}</span>
                                             </li>
@@ -302,13 +297,13 @@ export default function Welcome() {
 
                                     <Link
                                         href="/register"
-                                        className={`block w-full rounded-sm border px-6 py-3 text-center text-sm font-medium leading-normal transition-all ${
+                                        className={`block w-full rounded-sm border px-6 py-3 text-center text-sm leading-normal font-medium transition-all ${
                                             plan.featured
                                                 ? 'border-black bg-[#1b1b18] text-white hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white'
                                                 : 'border-[#19140035] text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]'
                                         }`}
                                     >
-                                        Get Started
+                                        Comenzar
                                     </Link>
                                 </div>
                             ))}
@@ -317,65 +312,24 @@ export default function Welcome() {
                 </section>
 
                 {/* CTA Section */}
-                <section className="bg-gradient-to-r from-[#f53003] to-[#ff9966] px-6 py-20 dark:from-[#FF4433] dark:to-[#ff9966] lg:px-8">
+                <section className="bg-gradient-to-r from-[#055c9d] to-[#05c7d] px-6 py-20 lg:px-8 dark:from-[#055c9d] dark:to-[#55c7d]">
                     <div className="mx-auto max-w-4xl text-center text-white">
-                        <h2 className="mb-4 text-3xl font-semibold lg:text-5xl">
-                            Ready to Get Started?
-                        </h2>
-                        <p className="mb-8 text-lg opacity-90">
-                            Join thousands of developers building amazing applications with Laravel
-                        </p>
+                        <h2 className="mb-4 text-3xl font-semibold lg:text-5xl">¿listo para comenar?</h2>
+                        <p className="mb-8 text-lg opacity-90">Únete a este gran de equipo de atletas, entrenadores y familias ganadoras</p>
                         <Link
                             href="/register"
-                            className="inline-block rounded-sm border-2 border-white bg-white px-8 py-3 text-sm font-medium leading-normal text-[#1b1b18] hover:bg-transparent hover:text-white"
+                            className="inline-block rounded-sm border-2 border-white bg-white px-8 py-3 text-sm leading-normal font-medium text-[#1b1b18] hover:bg-transparent hover:text-white"
                         >
-                            Start Building Today
+                            Comenzar
                         </Link>
+                    </div>
+                    <div className="mt-12  pt-8 text-center text-sm text-white dark:border-[#3E3E3A] dark:text-[#A1A09A]">
+                        © 2025 Psicologia para la vida y para el deporte. Todos los derechos reservados.
                     </div>
                 </section>
 
                 {/* Footer */}
-                <footer className="border-t border-[#e3e3e0] bg-white px-6 py-12 dark:border-[#3E3E3A] dark:bg-[#161615] lg:px-8">
-                    <div className="mx-auto max-w-7xl">
-                        <div className="grid gap-8 md:grid-cols-4">
-                            <div>
-                                <h3 className="mb-4 font-semibold text-[#f53003] dark:text-[#FF4433]">
-                                    Laravel
-                                </h3>
-                                <p className="text-sm text-[#706f6c] dark:text-[#A1A09A]">
-                                    Building the future of web development
-                                </p>
-                            </div>
-                            <div>
-                                <h4 className="mb-4 font-medium">Product</h4>
-                                <ul className="space-y-2 text-sm text-[#706f6c] dark:text-[#A1A09A]">
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">Features</a></li>
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">Pricing</a></li>
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">Documentation</a></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 className="mb-4 font-medium">Company</h4>
-                                <ul className="space-y-2 text-sm text-[#706f6c] dark:text-[#A1A09A]">
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">About</a></li>
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">Blog</a></li>
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">Careers</a></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 className="mb-4 font-medium">Support</h4>
-                                <ul className="space-y-2 text-sm text-[#706f6c] dark:text-[#A1A09A]">
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">Help Center</a></li>
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">Contact</a></li>
-                                    <li><a href="#" className="hover:text-[#1b1b18] dark:hover:text-[#EDEDEC]">Status</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="mt-12 border-t border-[#e3e3e0] pt-8 text-center text-sm text-[#706f6c] dark:border-[#3E3E3A] dark:text-[#A1A09A]">
-                            © 2024 Laravel. All rights reserved.
-                        </div>
-                    </div>
-                </footer>
+
             </div>
         </>
     );
