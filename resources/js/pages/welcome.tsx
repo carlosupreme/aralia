@@ -210,7 +210,7 @@ export default function Welcome() {
                                             'herramientas efectivas para ayudar a tu\n' +
                                             'deportista a lograrlo mientras desbloqueas tu\n' +
                                             'propio potencial\n',
-                                        '6 Platicas con padres de familia de acuerdo\n' + 'al plan de trabajo del entrenador',
+                                        'Platica con padres de familia de acuerdo\n' + 'al plan de trabajo del entrenador',
                                     ],
                                     featured: false,
                                 },
@@ -249,7 +249,7 @@ export default function Welcome() {
                                             'como la gestión del estrés, concentración,\n' +
                                             'resiliencia y trabajo en equipo, adaptadas a sus\n' +
                                             'necesidades y etapa de desarrollo.',
-                                        '6 talleres para deportistas de acuerdo al plan\n' + 'de trabajo del entrenador',
+                                        'Talleres para deportistas de acuerdo al plan\n' + 'de trabajo del entrenador',
 
                                     ],
                                     featured: false,

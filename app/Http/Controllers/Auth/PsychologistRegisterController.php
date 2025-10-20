@@ -1,11 +1,10 @@
 <?php
-// app/Http/Controllers/Auth/RegisteredUserController.php
+// app/Http/Controllers/Auth/PsychologistRegisterController.php
 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Student;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,18 +14,18 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class RegisteredUserController extends Controller
+class PsychologistRegisterController extends Controller
 {
     /**
-     * Show the registration page.
+     * Show the psychologist registration page.
      */
     public function create(): Response
     {
-        return Inertia::render('auth/register');
+        return Inertia::render('auth/register-psychologist');
     }
 
     /**
-     * Handle an incoming registration request for STUDENTS.
+     * Handle an incoming registration request for PSYCHOLOGISTS.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -34,13 +33,6 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'date_of_birth' => 'required|date|before:today',
-            'team' => 'nullable|string|max:255',
-            'sport' => 'nullable|string|max:255',
-            'country' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'parent' => 'nullable|string|max:255',
-            'parent_name' => 'required|string|max:255',
         ]);
 
         $user = User::create([
@@ -49,18 +41,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->assignRole('student');
-
-        Student::create([
-            'user_id' => $user->id,
-            'date_of_birth' => $request->date_of_birth,
-            'team' => $request->team,
-            'sport' => $request->sport,
-            'country' => $request->country,
-            'city' => $request->city,
-            'parent' => $request->parent,
-            'parent_name' => $request->parent_name,
-        ]);
+        $user->assignRole('psychologist');
 
         event(new Registered($user));
 

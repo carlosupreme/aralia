@@ -1,4 +1,5 @@
 <?php
+// app/Http/Middleware/HandleInertiaRequests.php
 
 namespace App\Http\Middleware;
 
@@ -33,11 +34,27 @@ class HandleInertiaRequests extends Middleware
                     'email' => $request->user()->email,
                     'roles' => $request->user()->getRoleNames(),
                     'permissions' => $request->user()->getPermissionNames(),
+
                     // Datos adicionales para gamificación (solo estudiantes)
-                    'gamification' => $request->user() && $request->user()->hasRole('student') ? [
-                        'current_level' => $request->user()->current_level ?? 1,
-                        'total_achievements' => $request->user()->achievements_count ?? 0,
-                        'progress_to_next_level' => $request->user()->progress_percentage ?? 0,
+                    'gamification' => $request->user()->isStudent() && $request->user()->student ? [
+                        'current_level' => $request->user()->student->current_level,
+                        'total_achievements' => count($request->user()->student->achievements ?? []),
+                        'progress_to_next_level' => $this->calculateProgressPercentage($request->user()->student),
+                    ] : null,
+
+                    // Perfil del estudiante si existe
+                    'student' => $request->user()->isStudent() && $request->user()->student ? [
+                        'date_of_birth' => $request->user()->student->date_of_birth?->format('Y-m-d'),
+                        'team' => $request->user()->student->team,
+                        'sport' => $request->user()->student->sport,
+                        'country' => $request->user()->student->country,
+                        'city' => $request->user()->student->city,
+                        'parent' => $request->user()->student->parent,
+                        'parent_name' => $request->user()->student->parent_name,
+                        'total_points' => $request->user()->student->total_points,
+                        'current_level' => $request->user()->student->current_level,
+                        'subscription_status' => $request->user()->student->subscription_status,
+                        'subscription_expires_at' => $request->user()->student->subscription_expires_at?->format('Y-m-d'),
                     ] : null,
                 ] : null,
             ],
@@ -46,5 +63,20 @@ class HandleInertiaRequests extends Middleware
                 'error' => $request->session()->get('error'),
             ],
         ]);
+    }
+
+    /**
+     * Calcular porcentaje de progreso al siguiente nivel
+     */
+    private function calculateProgressPercentage($student): float
+    {
+        if (!$student) {
+            return 0;
+        }
+
+        $pointsForNextLevel = $student->current_level * 100;
+        $currentLevelPoints = $student->total_points % $pointsForNextLevel;
+
+        return round(($currentLevelPoints / $pointsForNextLevel) * 100, 2);
     }
 }
