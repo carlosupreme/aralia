@@ -314,7 +314,7 @@ export default function Welcome() {
                 {/* CTA Section */}
                 <section className="bg-gradient-to-r from-[#055c9d] to-[#05c7d] px-6 py-20 lg:px-8 dark:from-[#055c9d] dark:to-[#55c7d]">
                     <div className="mx-auto max-w-4xl text-center text-white">
-                        <h2 className="mb-4 text-3xl font-semibold lg:text-5xl">¿listo para comenar?</h2>
+                        <h2 className="mb-4 text-3xl font-semibold lg:text-5xl">¿Listo para comenzar?</h2>
                         <p className="mb-8 text-lg opacity-90">Únete a este gran de equipo de atletas, entrenadores y familias ganadoras</p>
                         <Link
                             href="/register"
