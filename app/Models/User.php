@@ -176,6 +176,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all appointments where this user is the psychologist
+     */
+    public function appointmentsAsPsychologist(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'psychologist_id');
+    }
+
+    /**
+     * Get all appointments where this user is the student
+     */
+    public function appointmentsAsStudent(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'student_id');
+    }
+
+    /**
      * Get the latest confirmed payment for a specific program
      */
     public function latestConfirmedPaymentFor(Program $program): ?Payment

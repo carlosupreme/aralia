@@ -13,6 +13,8 @@ use App\Models\Program;
 use App\Models\Level;
 use App\Models\Multimedia;
 use App\Models\Payment;
+use App\Models\Appointment;
+use App\Models\AppointmentProposal;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -193,5 +195,112 @@ class RolesAndPermissionsSeeder extends Seeder
                 'due_date' => now()->addMonth(),
             ]);
         }
+
+        // Create sample appointments
+        // 1. Upcoming scheduled appointment
+        $upcomingAppointment = Appointment::firstOrCreate(
+            [
+                'program_id' => $program->id,
+                'psychologist_id' => $psychologist->id,
+                'student_id' => $studentUser->id,
+                'scheduled_date' => now()->addDays(3)->format('Y-m-d'),
+            ],
+            [
+                'scheduled_time' => '10:00:00',
+                'duration_minutes' => 60,
+                'meeting_type' => Appointment::TYPE_ONLINE,
+                'meeting_link' => 'https://meet.google.com/abc-defg-hij',
+                'notes' => 'Primera sesión de evaluación del progreso en el nivel 1.',
+                'status' => Appointment::STATUS_SCHEDULED,
+                'is_recurring' => false,
+            ]
+        );
+
+        // 2. Appointment with pending reschedule and proposals
+        $rescheduleAppointment = Appointment::firstOrCreate(
+            [
+                'program_id' => $program->id,
+                'psychologist_id' => $psychologist->id,
+                'student_id' => $studentUser->id,
+                'scheduled_date' => now()->addDays(7)->format('Y-m-d'),
+            ],
+            [
+                'scheduled_time' => '15:00:00',
+                'duration_minutes' => 90,
+                'meeting_type' => Appointment::TYPE_ONLINE,
+                'meeting_link' => 'https://zoom.us/j/123456789',
+                'notes' => 'Sesión de revisión de técnicas de concentración.',
+                'status' => Appointment::STATUS_PENDING_RESCHEDULE,
+                'is_recurring' => false,
+            ]
+        );
+
+        // Add reschedule proposals to demonstrate the chat flow
+        if ($rescheduleAppointment->proposals()->count() === 0) {
+            // Student proposes new dates
+            $studentProposal = AppointmentProposal::create([
+                'appointment_id' => $rescheduleAppointment->id,
+                'user_id' => $studentUser->id,
+                'proposed_dates' => [
+                    ['date' => now()->addDays(8)->format('Y-m-d'), 'time' => '16:00:00'],
+                    ['date' => now()->addDays(9)->format('Y-m-d'), 'time' => '15:00:00'],
+                    ['date' => now()->addDays(10)->format('Y-m-d'), 'time' => '14:00:00'],
+                ],
+                'message' => 'Disculpa, tengo entrenamiento ese día. ¿Te funcionan estas opciones?',
+                'status' => AppointmentProposal::STATUS_PENDING,
+            ]);
+
+            // Psychologist counter-proposes
+            AppointmentProposal::create([
+                'appointment_id' => $rescheduleAppointment->id,
+                'user_id' => $psychologist->id,
+                'proposed_dates' => [
+                    ['date' => now()->addDays(8)->format('Y-m-d'), 'time' => '16:00:00'],
+                    ['date' => now()->addDays(11)->format('Y-m-d'), 'time' => '11:00:00'],
+                ],
+                'message' => 'El martes 16:00 me funciona perfecto. También tengo disponible el viernes por la mañana.',
+                'status' => AppointmentProposal::STATUS_PENDING,
+            ]);
+        }
+
+        // 3. Completed appointment (past)
+        Appointment::firstOrCreate(
+            [
+                'program_id' => $program->id,
+                'psychologist_id' => $psychologist->id,
+                'student_id' => $studentUser->id,
+                'scheduled_date' => now()->subDays(5)->format('Y-m-d'),
+            ],
+            [
+                'scheduled_time' => '14:00:00',
+                'duration_minutes' => 60,
+                'meeting_type' => Appointment::TYPE_ONLINE,
+                'meeting_link' => 'https://meet.google.com/xyz-abcd-efg',
+                'notes' => 'Sesión inicial de introducción al programa.',
+                'status' => Appointment::STATUS_COMPLETED,
+                'is_recurring' => false,
+            ]
+        );
+
+        // 4. Recurring weekly appointment
+        Appointment::firstOrCreate(
+            [
+                'program_id' => $program->id,
+                'psychologist_id' => $psychologist->id,
+                'student_id' => $studentUser->id,
+                'scheduled_date' => now()->addDays(14)->format('Y-m-d'),
+            ],
+            [
+                'scheduled_time' => '09:00:00',
+                'duration_minutes' => 45,
+                'meeting_type' => Appointment::TYPE_ONLINE,
+                'meeting_link' => 'https://meet.google.com/recurring-link',
+                'notes' => 'Sesión semanal de seguimiento. Se repetirá cada semana durante 4 semanas.',
+                'status' => Appointment::STATUS_SCHEDULED,
+                'is_recurring' => true,
+                'recurrence_pattern' => 'weekly',
+                'recurrence_count' => 4,
+            ]
+        );
     }
 }

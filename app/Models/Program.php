@@ -79,4 +79,12 @@ class Program extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    /**
+     * Get all appointments for this program
+     */
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

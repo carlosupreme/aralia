@@ -1,29 +1,20 @@
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { dashboard, progreso, niveles, multimedia, videollamadas, logros, suscripcion, manual, soporte } from '@/routes';
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    useSidebar,
+} from '@/components/ui/sidebar';
+import { dashboard, manual, soporte } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import {
-    BookOpen,
-    Folder,
-    LayoutGrid,
-    Users,
-    UserCheck,
-    GraduationCap,
-    Trophy,
-    CreditCard,
-    BookMarked,
-    TrendingUp,
-    Play,
-    Video,
-    MessageCircle,
-    Target,
-    Calendar,
-    Star,
-    Book
-} from 'lucide-react';
+import { Book, BookMarked, BookOpen, Calendar, CreditCard, Folder, LayoutGrid, Star, Trophy, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 // Navegación Principal - Área del Estudiante/Deportista
@@ -38,78 +29,41 @@ const mainNavItems: NavItem[] = [
         href: '/programs',
         icon: Book,
     },
+
     {
-        title: 'Mi Progreso',
-        href: progreso(),
-        icon: TrendingUp,
-    },
-    {
-        title: 'Niveles',
-        href: niveles(),
-        icon: Target,
-    },
-    {
-        title: 'Contenido Multimedia',
-        href: multimedia(),
-        icon: Play,
-    },
-    {
-        title: 'Videollamadas',
-        href: videollamadas(),
-        icon: Video,
-    },
-    {
-        title: 'Logros',
-        href: logros(),
-        icon: Trophy,
+        title: 'Mis Citas',
+        href: '/appointments',
+        icon: Calendar,
     },
     {
         title: 'Pagos',
         href: '/payments',
         icon: CreditCard,
     },
-    {
-        title: 'Suscripción',
-        href: suscripcion(),
-        icon: Star,
-    },
 ];
 
 // Navegación Administrativa (Solo visible para psicólogos)
 const adminNavItems: NavItem[] = [
     {
-        title: 'Gestión de Usuarios',
+        title: 'Usuarios',
         href: '/admin/usuarios',
         icon: Users,
     },
+
     {
-        title: 'Deportistas Ganadores',
-        href: '/admin/deportistas',
-        icon: GraduationCap,
-    },
-    {
-        title: 'Familias Ganadoras',
-        href: '/admin/padres',
-        icon: UserCheck,
-    },
-    {
-        title: 'Programas y Planes',
+        title: 'Programas',
         href: '/programs',
         icon: BookMarked,
     },
     {
-        title: 'Pagos y Suscripciones',
+        title: 'Pagos',
         href: '/admin/payments',
         icon: CreditCard,
     },
+
     {
-        title: 'Foros y Chats',
-        href: '/admin/comunicacion',
-        icon: MessageCircle,
-    },
-    {
-        title: 'Citas Programadas',
-        href: '/admin/citas',
+        title: 'Citas',
+        href: '/appointments',
         icon: Calendar,
     },
 ];
@@ -147,6 +101,7 @@ export function AppSidebar() {
     }>().props;
 
     const user = auth.user;
+    const { open } = useSidebar();
 
     // Verificar roles
     const isStudent = user?.roles.includes('student');
@@ -158,7 +113,7 @@ export function AppSidebar() {
     const progressToNextLevel = user?.gamification?.progress_to_next_level ?? 0;
 
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="floating">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -172,54 +127,36 @@ export function AppSidebar() {
 
                 {/* Gamification Status - Solo para estudiantes */}
                 {isStudent && user?.gamification && (
-                    <div className="px-4 py-3 bg-muted/50 rounded-lg mx-3 mt-2">
-                        <div className="flex items-center justify-between mb-2">
+                    <div className="mx-3 mt-2 rounded-lg bg-muted/50 px-4 py-3">
+                        <div className="mb-2 flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <Star className="w-4 h-4" />
+                                <Star className="h-4 w-4" />
                                 <span className="text-sm font-medium">Nivel {currentLevel}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                                <Trophy className="w-3 h-3" />
+                                <Trophy className="h-3 w-3" />
                                 <span className="text-xs text-muted-foreground">{totalAchievements}</span>
                             </div>
                         </div>
-                        <div className="w-full bg-muted rounded-full h-2 mb-1">
+                        <div className="mb-1 h-2 w-full rounded-full bg-muted">
                             <div
-                                className="bg-primary h-2 rounded-full transition-all duration-300"
+                                className="h-2 rounded-full bg-primary transition-all duration-300"
                                 style={{ width: `${progressToNextLevel}%` }}
                             ></div>
                         </div>
-                        <p className="text-xs text-muted-foreground">
-                            {progressToNextLevel}% al siguiente nivel
-                        </p>
+                        <p className="text-xs text-muted-foreground">{progressToNextLevel}% al siguiente nivel</p>
                     </div>
                 )}
             </SidebarHeader>
 
             <SidebarContent>
-                {/* Navegación para Estudiantes - Panel de Estudiantes */}
-                {isStudent && (
-                    <>
-                        <div className="px-4 py-2">
-                            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                                Panel de Estudiantes
-                            </h3>
-                        </div>
-                        <NavMain items={mainNavItems} />
-                    </>
+                {open && (
+                    <div className="px-4 py-2">
+                        <h3 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">Panel</h3>
+                    </div>
                 )}
-
-                {/* Navegación para Psicólogos - Administración */}
-                {isPsychologist && (
-                    <>
-                        <div className="px-4 py-2">
-                            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                                Administración
-                            </h3>
-                        </div>
-                        <NavMain items={adminNavItems} />
-                    </>
-                )}
+                {isStudent && <NavMain items={mainNavItems} />}
+                {isPsychologist && <NavMain items={adminNavItems} />}
             </SidebarContent>
 
             <SidebarFooter>

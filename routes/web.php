@@ -11,6 +11,7 @@ use App\Http\Controllers\MultimediaController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\AppointmentController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -86,6 +87,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
     Route::post('notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-as-read');
     Route::delete('notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
+    // Appointment routes (accessible by both students and psychologists)
+    Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+    Route::post('appointments', [AppointmentController::class, 'store'])->name('appointments.store')->middleware('role:psychologist');
+    Route::patch('appointments/{appointment}', [AppointmentController::class, 'update'])->name('appointments.update')->middleware('role:psychologist');
+    Route::delete('appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+    Route::post('appointments/{appointment}/complete', [AppointmentController::class, 'complete'])->name('appointments.complete')->middleware('role:psychologist');
+    Route::post('appointments/{appointment}/reschedule', [AppointmentController::class, 'initiateReschedule'])->name('appointments.reschedule');
+    Route::post('appointments/{appointment}/propose', [AppointmentController::class, 'proposeNewDates'])->name('appointments.propose');
+    Route::post('proposals/{proposal}/accept', [AppointmentController::class, 'acceptProposal'])->name('proposals.accept');
+    Route::post('proposals/{proposal}/reject', [AppointmentController::class, 'rejectProposal'])->name('proposals.reject');
 
     // Rutas de soporte (accesibles por ambos roles)
     Route::get('manual', function () {

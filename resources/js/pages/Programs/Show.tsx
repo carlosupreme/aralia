@@ -6,6 +6,8 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { useAuth } from '@/hooks/useAuth';
+import { useState } from 'react';
+import ScheduleMeetingDrawer from '@/components/appointments/ScheduleMeetingDrawer';
 import {
     ArrowLeft,
     Settings,
@@ -22,7 +24,8 @@ import {
     CheckCircle,
     Clock,
     Unlock,
-    User
+    User,
+    Calendar
 } from 'lucide-react';
 
 interface Multimedia {
@@ -103,6 +106,7 @@ const getMultimediaIcon = (type: string) => {
 
 export default function ShowProgram({ program }: Props) {
     const { isPsychologist, isStudent } = useAuth();
+    const [isScheduleDrawerOpen, setIsScheduleDrawerOpen] = useState(false);
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -148,14 +152,23 @@ export default function ShowProgram({ program }: Props) {
                         )}
                     </div>
 
-                    {/* Edit Button - Only for Psychologists */}
+                    {/* Actions - Only for Psychologists */}
                     {isPsychologist && (
-                        <Link href={`/programs/${program.id}/edit`}>
-                            <Button variant="outline">
-                                <Settings className="w-4 h-4 mr-2" />
-                                Configurar
+                        <div className="flex gap-2">
+                            <Button
+                                variant="default"
+                                onClick={() => setIsScheduleDrawerOpen(true)}
+                            >
+                                <Calendar className="w-4 h-4 mr-2" />
+                                Programar Cita
                             </Button>
-                        </Link>
+                            <Link href={`/programs/${program.id}/edit`}>
+                                <Button variant="outline">
+                                    <Settings className="w-4 h-4 mr-2" />
+                                    Configurar
+                                </Button>
+                            </Link>
+                        </div>
                     )}
                 </div>
 
@@ -466,6 +479,16 @@ export default function ShowProgram({ program }: Props) {
                     </div>
                 </div>
             </div>
+
+            {/* Schedule Meeting Drawer */}
+            {isPsychologist && program.students && (
+                <ScheduleMeetingDrawer
+                    open={isScheduleDrawerOpen}
+                    onOpenChange={setIsScheduleDrawerOpen}
+                    programId={program.id}
+                    students={program.students}
+                />
+            )}
         </AppLayout>
     );
 }

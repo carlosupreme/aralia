@@ -1,5 +1,3 @@
-import AppLogoIcon from './app-logo-icon';
-
 export default function AppLogo() {
     return (
         <>
@@ -7,8 +5,8 @@ export default function AppLogo() {
                 <div className="text-xs font-bold">🧠</div>
             </div>
             <div className="ml-2 grid flex-1 text-left text-sm min-w-0">
-                <span className="truncate leading-tight font-semibold">Psicología Deportiva</span>
-                <span className="truncate text-xs text-muted-foreground">Mental Training</span>
+                <span className="truncate leading-tight font-semibold">Psicología</span>
+                <span className="truncate text-xs text-muted-foreground">Para la vida y el deporte</span>
             </div>
         </>
     );
