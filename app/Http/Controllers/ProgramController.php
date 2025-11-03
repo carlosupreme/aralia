@@ -96,16 +96,28 @@ class ProgramController extends Controller
             'students:id,name,email'
         ]);
 
-        // For students, add their level unlock status
+        // For students, add their level unlock and access status
         if ($user->isStudent()) {
+            // Get unlocked levels (levels explicitly unlocked for the user)
             $unlockedLevels = $user->unlockedLevels()
                 ->where('program_id', $program->id)
                 ->pluck('level_id')
                 ->toArray();
 
-            $program->levels->map(function ($level) use ($unlockedLevels, $user) {
+            // Get accessible levels (unlocked + all previous levels)
+            $accessibleLevels = $user->getAccessibleLevelsForProgram($program);
+
+            $program->levels->map(function ($level) use ($unlockedLevels, $accessibleLevels, $user) {
+                // A level is unlocked if it's in the unlocked levels list
                 $level->is_unlocked_for_user = in_array($level->id, $unlockedLevels);
+
+                // A level is accessible if it's in the accessible levels list
+                // (unlocked OR previous to an unlocked level)
+                $level->is_accessible_for_user = in_array($level->id, $accessibleLevels);
+
+                // Check if completed
                 $level->is_completed_for_user = $level->isCompletedFor($user);
+
                 return $level;
             });
         }

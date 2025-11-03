@@ -21,7 +21,8 @@ import {
     MessageCircle,
     Target,
     Calendar,
-    Star
+    Star,
+    Book
 } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -31,6 +32,11 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Mis Programas',
+        href: '/programs',
+        icon: Book,
     },
     {
         title: 'Mi Progreso',

@@ -10,6 +10,9 @@ use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Program;
+use App\Models\Level;
+use App\Models\Multimedia;
+use App\Models\Payment;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -94,12 +97,101 @@ class RolesAndPermissionsSeeder extends Seeder
                 'description' => 'Programa completo para el desarrollo de habilidades mentales en deportistas.',
                 'psychologist_id' => $psychologist->id,
                 'monthly_price' => 500.00,
+                'is_active' => true,
             ]
         );
 
+        // Create levels for the program if they don't exist
+        if ($program->levels()->count() === 0) {
+            $level1 = Level::create([
+                'name' => 'Nivel 1: Fundamentos',
+                'description' => 'Conceptos básicos de entrenamiento mental',
+                'program_id' => $program->id,
+                'order_index' => 1,
+                'is_active' => true,
+            ]);
+
+            $level2 = Level::create([
+                'name' => 'Nivel 2: Intermedio',
+                'description' => 'Técnicas intermedias de concentración',
+                'program_id' => $program->id,
+                'order_index' => 2,
+                'is_active' => true,
+            ]);
+
+            $level3 = Level::create([
+                'name' => 'Nivel 3: Avanzado',
+                'description' => 'Estrategias avanzadas de rendimiento',
+                'program_id' => $program->id,
+                'order_index' => 3,
+                'is_active' => true,
+            ]);
+
+            $level4 = Level::create([
+                'name' => 'Nivel 4: Maestría',
+                'description' => 'Dominio completo de técnicas mentales',
+                'program_id' => $program->id,
+                'order_index' => 4,
+                'is_active' => true,
+            ]);
+
+            // Add multimedia content to each level
+            foreach ([$level1, $level2, $level3, $level4] as $index => $level) {
+                // Video
+                Multimedia::create([
+                    'name' => "Video Introductorio - {$level->name}",
+                    'description' => 'Video de introducción al nivel',
+                    'url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    'type' => 'video',
+                    'duration' => '15:30',
+                    'level_id' => $level->id,
+                    'order_index' => 1,
+                    'is_active' => true,
+                ]);
+
+                // Document
+                Multimedia::create([
+                    'name' => "Guía de Estudio - {$level->name}",
+                    'description' => 'Documento PDF con ejercicios prácticos',
+                    'url' => 'https://example.com/guia.pdf',
+                    'type' => 'document',
+                    'level_id' => $level->id,
+                    'order_index' => 2,
+                    'is_active' => true,
+                ]);
+
+                // Audio (only for levels 2 and 3)
+                if ($index >= 1 && $index <= 2) {
+                    Multimedia::create([
+                        'name' => "Meditación Guiada - {$level->name}",
+                        'description' => 'Audio de meditación para mejorar la concentración',
+                        'url' => 'https://example.com/meditacion.mp3',
+                        'type' => 'audio',
+                        'duration' => '10:00',
+                        'level_id' => $level->id,
+                        'order_index' => 3,
+                        'is_active' => true,
+                    ]);
+                }
+            }
+        }
+
         // Inscribir al estudiante en el programa
+        // This will automatically unlock the first level
         if (!$program->hasStudent($studentUser)) {
             $studentUser->enrollInProgram($program);
+        }
+
+        // Create a confirmed payment for the student so they can access the program
+        if (!$studentUser->payments()->where('program_id', $program->id)->exists()) {
+            Payment::create([
+                'user_id' => $studentUser->id,
+                'program_id' => $program->id,
+                'amount' => 500.00,
+                'status' => Payment::STATUS_CONFIRMED,
+                'paid_at' => now(),
+                'due_date' => now()->addMonth(),
+            ]);
         }
     }
 }

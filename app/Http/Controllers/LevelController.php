@@ -146,10 +146,11 @@ class LevelController extends Controller
                 abort(403, 'No estás inscrito en este programa.');
             }
 
-            // Check if the level is unlocked for the student
-            if (!$level->isUnlockedFor($user)) {
+            // Check if the user can view this level's content
+            // User can view if level is accessible (unlocked or previous to an unlocked level)
+            if (!$user->canViewLevelContent($level)) {
                 return redirect()->route('programs.show', $program->id)
-                    ->with('error', 'Este nivel no está desbloqueado. Completa los niveles anteriores primero.');
+                    ->with('error', 'Este nivel no está disponible. Debes tener acceso a niveles posteriores para ver este contenido.');
             }
         }
 

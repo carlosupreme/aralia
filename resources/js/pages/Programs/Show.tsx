@@ -2,7 +2,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
@@ -43,6 +42,7 @@ interface Level {
     is_active: boolean;
     multimedia: Multimedia[];
     is_unlocked_for_user?: boolean;
+    is_accessible_for_user?: boolean;
     is_completed_for_user?: boolean;
 }
 
@@ -136,14 +136,14 @@ export default function ShowProgram({ program }: Props) {
                     </div>
 
                     {/* Edit Button - Only for Psychologists */}
-                    <ProtectedRoute requiredRole="psychologist">
+                    {isPsychologist && (
                         <Link href={`/programs/${program.id}/edit`}>
                             <Button variant="outline">
                                 <Settings className="w-4 h-4 mr-2" />
                                 Configurar
                             </Button>
                         </Link>
-                    </ProtectedRoute>
+                    )}
                 </div>
 
                 <div className="grid gap-6 lg:grid-cols-3">
@@ -228,14 +228,14 @@ export default function ShowProgram({ program }: Props) {
                     <div className="lg:col-span-2">
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-2xl font-semibold">Niveles del Programa</h2>
-                            <ProtectedRoute requiredRole="psychologist">
+                            {isPsychologist && (
                                 <Link href={`/programs/${program.id}/levels/create`}>
                                     <Button>
                                         <Target className="w-4 h-4 mr-2" />
                                         Agregar Nivel
                                     </Button>
                                 </Link>
-                            </ProtectedRoute>
+                            )}
                         </div>
 
                         {program.levels.length === 0 ? (
@@ -248,24 +248,25 @@ export default function ShowProgram({ program }: Props) {
                                     <p className="text-muted-foreground text-center mb-4">
                                         Este programa aún no tiene niveles de aprendizaje
                                     </p>
-                                    <ProtectedRoute requiredRole="psychologist">
+                                    {isPsychologist && (
                                         <Link href={`/programs/${program.id}/levels/create`}>
                                             <Button>
                                                 <Target className="w-4 h-4 mr-2" />
                                                 Crear Primer Nivel
                                             </Button>
                                         </Link>
-                                    </ProtectedRoute>
+                                    )}
                                 </CardContent>
                             </Card>
                         ) : (
                             <div className="space-y-4">
                                 {program.levels.map((level, index) => {
                                     const isUnlocked = isPsychologist || level.is_unlocked_for_user;
+                                    const isAccessible = isPsychologist || level.is_accessible_for_user;
                                     const isCompleted = level.is_completed_for_user;
 
                                     return (
-                                        <Card key={level.id} className={`${!isUnlocked ? 'opacity-60' : ''}`}>
+                                        <Card key={level.id} className={`${!isAccessible ? 'opacity-60' : ''}`}>
                                             <CardHeader>
                                                 <div className="flex items-center gap-3">
                                                     <div className="flex-shrink-0">
@@ -289,13 +290,13 @@ export default function ShowProgram({ program }: Props) {
                                                     </div>
                                                     <div className="flex items-center gap-2">
                                                         <Badge variant={isCompleted ? "default" : isUnlocked ? "secondary" : "outline"}>
-                                                            {isCompleted ? "Completado" : isUnlocked ? "Disponible" : "Bloqueado"}
+                                                            {isCompleted ? "Completado" : isUnlocked ? "Disponible" : isAccessible ? "Visible" : "Bloqueado"}
                                                         </Badge>
-                                                        {isUnlocked ? (
+                                                        {isAccessible ? (
                                                             <Link href={`/levels/${level.id}/learn`}>
                                                                 <Button size="sm" variant="outline" className="flex items-center gap-2">
                                                                     <Play className="w-3 h-3" />
-                                                                    Aprender
+                                                                    {isUnlocked ? 'Aprender' : 'Ver'}
                                                                 </Button>
                                                             </Link>
                                                         ) : (
@@ -308,8 +309,8 @@ export default function ShowProgram({ program }: Props) {
                                                 </div>
                                             </CardHeader>
 
-                                            {/* Multimedia Content */}
-                                            {level.multimedia.length > 0 && (isUnlocked || isPsychologist) && (
+                                            {/* Multimedia Content - Show for accessible levels */}
+                                            {level.multimedia.length > 0 && (isAccessible || isPsychologist) && (
                                                 <CardContent>
                                                     <div className="space-y-2">
                                                         <h4 className="font-medium text-sm">Contenido multimedia:</h4>
@@ -325,7 +326,7 @@ export default function ShowProgram({ program }: Props) {
                                                                                 {media.type} {media.duration && `• ${media.duration}`}
                                                                             </p>
                                                                         </div>
-                                                                        {isUnlocked && (
+                                                                        {isAccessible && (
                                                                             <Button variant="ghost" size="sm">
                                                                                 <Play className="w-3 h-3" />
                                                                             </Button>
@@ -337,7 +338,7 @@ export default function ShowProgram({ program }: Props) {
                                                     </div>
 
                                                     {/* Level Actions for Psychologists */}
-                                                    <ProtectedRoute requiredRole="psychologist">
+                                                    {isPsychologist && (
                                                         <div className="flex gap-2 mt-4 pt-4 border-t">
                                                             <Link href={`/levels/${level.id}/multimedia/create`}>
                                                                 <Button variant="outline" size="sm">
@@ -352,16 +353,16 @@ export default function ShowProgram({ program }: Props) {
                                                                 </Button>
                                                             </Link>
                                                         </div>
-                                                    </ProtectedRoute>
+                                                    )}
                                                 </CardContent>
                                             )}
 
-                                            {level.multimedia.length === 0 && (isUnlocked || isPsychologist) && (
+                                            {level.multimedia.length === 0 && (isAccessible || isPsychologist) && (
                                                 <CardContent>
                                                     <p className="text-sm text-muted-foreground mb-4">
                                                         Este nivel no tiene contenido multimedia
                                                     </p>
-                                                    <ProtectedRoute requiredRole="psychologist">
+                                                    {isPsychologist && (
                                                         <div className="flex gap-2">
                                                             <Link href={`/levels/${level.id}/multimedia/create`}>
                                                                 <Button variant="outline" size="sm">
@@ -376,7 +377,7 @@ export default function ShowProgram({ program }: Props) {
                                                                 </Button>
                                                             </Link>
                                                         </div>
-                                                    </ProtectedRoute>
+                                                    )}
                                                 </CardContent>
                                             )}
                                         </Card>

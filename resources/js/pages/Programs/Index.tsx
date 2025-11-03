@@ -1,7 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
@@ -66,14 +65,14 @@ export default function ProgramsIndex({ programs }: Props) {
                     </div>
 
                     {/* Create Program Button - Only for Psychologists */}
-                    <ProtectedRoute requiredRole="psychologist">
+                    {isPsychologist && (
                         <Link href="/programs/create">
                             <Button>
                                 <Plus className="w-4 h-4 mr-2" />
                                 Nuevo Programa
                             </Button>
                         </Link>
-                    </ProtectedRoute>
+                    )}
                 </div>
 
                 {/* Programs Grid */}

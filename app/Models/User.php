@@ -89,12 +89,74 @@ class User extends Authenticatable
             ->exists();
     }
 
+    /**
+     * Get all levels accessible to the user in a program
+     * A level is accessible if:
+     * - It's unlocked for the user, OR
+     * - Any level after it is unlocked (meaning all previous levels are accessible)
+     */
+    public function getAccessibleLevelsForProgram(Program $program): array
+    {
+        // Get all unlocked level IDs with their completion status
+        $unlockedLevels = $this->unlockedLevels()
+            ->wherePivot('is_unlocked', true)
+            ->get(['levels.id', 'levels.order_index', 'level_user.is_completed'])
+            ->keyBy('id');
+
+        if ($unlockedLevels->isEmpty()) {
+            return [];
+        }
+
+        // Get all levels in the program sorted by order
+        $allLevels = $program->levels()->orderBy('order_index')->get();
+
+        $accessibleLevelIds = [];
+        $maxUnlockedOrder = 0;
+
+        // First pass: find the highest unlocked level
+        foreach ($unlockedLevels as $level) {
+            if ($level->order_index > $maxUnlockedOrder) {
+                $maxUnlockedOrder = $level->order_index;
+            }
+        }
+
+        // Second pass: all levels up to and including the highest unlocked level are accessible
+        foreach ($allLevels as $level) {
+            if ($level->order_index <= $maxUnlockedOrder) {
+                $accessibleLevelIds[] = $level->id;
+            }
+        }
+
+        return $accessibleLevelIds;
+    }
+
+    /**
+     * Can the user view a specific level's content?
+     * User can view content if the level is accessible (unlocked or previous to an unlocked level)
+     */
+    public function canViewLevelContent(Level $level): bool
+    {
+        $accessibleLevels = $this->getAccessibleLevelsForProgram($level->program);
+        return in_array($level->id, $accessibleLevels);
+    }
+
     // Inscribir al usuario en un programa
     public function enrollInProgram(Program $program): void
     {
+        // Attach the user to the program
         $this->enrolledPrograms()->attach($program->id, [
             'enrolled_at' => now(),
         ]);
+
+        // Automatically unlock the first level (ordered by order_index)
+        $firstLevel = $program->levels()
+            ->where('is_active', true)
+            ->orderBy('order_index')
+            ->first();
+
+        if ($firstLevel) {
+            $firstLevel->unlockFor($this);
+        }
     }
 
     /**
