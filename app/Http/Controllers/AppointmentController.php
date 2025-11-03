@@ -239,7 +239,7 @@ class AppointmentController extends Controller
         $appointment->update([
             'scheduled_date' => $acceptedDate['date'],
             'scheduled_time' => $acceptedDate['time'],
-            'status' => Appointment::STATUS_RESCHEDULED,
+            'status' => Appointment::STATUS_SCHEDULED,
         ]);
 
         // Reject all other pending proposals for this appointment
@@ -248,7 +248,7 @@ class AppointmentController extends Controller
             ->where('status', AppointmentProposal::STATUS_PENDING)
             ->update(['status' => AppointmentProposal::STATUS_REJECTED]);
 
-        return back()->with('success', 'Propuesta aceptada. La cita ha sido reprogramada.');
+        return back()->with('success', 'Propuesta aceptada. La cita ha sido confirmada.');
     }
 
     /**

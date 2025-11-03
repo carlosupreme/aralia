@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm, usePage } from "@inertiajs/react";
+import { useForm, usePage, router } from "@inertiajs/react";
 import { Button } from "@/components/ui/button";
 import {
     Drawer,
@@ -18,6 +18,8 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar as CalendarIcon, Clock, Plus, Trash2, Check, X } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { accept as acceptProposal, reject as rejectProposal } from "@/routes/proposals";
+import { propose } from "@/routes/appointments";
 
 interface User {
     id: number;
@@ -65,6 +67,8 @@ export default function RescheduleDrawer({
 }: RescheduleDrawerProps) {
     const { auth } = usePage().props as any;
     const currentUserId = auth.user.id;
+    const [acceptingDate, setAcceptingDate] = useState<string | null>(null); // Format: "proposalId-dateIndex"
+    const [rejectingProposal, setRejectingProposal] = useState<number | null>(null);
 
     // Form for creating new proposal
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -94,7 +98,7 @@ export default function RescheduleDrawer({
 
     const handleSubmitProposal = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route("appointments.propose", appointment.id), {
+        post(propose(appointment.id).url, {
             preserveScroll: true,
             onSuccess: () => {
                 reset();
@@ -104,19 +108,39 @@ export default function RescheduleDrawer({
     };
 
     const handleAcceptProposal = (proposalId: number, dateIndex: number) => {
-        post(route("proposals.accept", proposalId), {
-            data: { date_index: dateIndex },
-            preserveScroll: true,
-            onSuccess: () => {
-                onOpenChange(false);
-            },
-        });
+        const key = `${proposalId}-${dateIndex}`;
+        setAcceptingDate(key);
+        router.post(
+            acceptProposal(proposalId).url,
+            { date_index: dateIndex },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setAcceptingDate(null);
+                    onOpenChange(false);
+                },
+                onError: () => {
+                    setAcceptingDate(null);
+                },
+            }
+        );
     };
 
     const handleRejectProposal = (proposalId: number) => {
-        post(route("proposals.reject", proposalId), {
-            preserveScroll: true,
-        });
+        if (!confirm("¿Estás seguro de que deseas rechazar esta propuesta?")) {
+            return;
+        }
+        setRejectingProposal(proposalId);
+        router.post(
+            rejectProposal(proposalId).url,
+            {},
+            {
+                preserveScroll: true,
+                onFinish: () => {
+                    setRejectingProposal(null);
+                },
+            }
+        );
     };
 
     const getStatusBadge = (status: string) => {
@@ -244,9 +268,14 @@ export default function RescheduleDrawer({
                                                                         idx
                                                                     )
                                                                 }
+                                                                disabled={
+                                                                    acceptingDate === `${proposal.id}-${idx}`
+                                                                }
                                                             >
                                                                 <Check className="h-4 w-4 mr-1" />
-                                                                Aceptar
+                                                                {acceptingDate === `${proposal.id}-${idx}`
+                                                                    ? "Aceptando..."
+                                                                    : "Aceptar"}
                                                             </Button>
                                                         </div>
                                                     )}
@@ -268,10 +297,13 @@ export default function RescheduleDrawer({
                                                     onClick={() =>
                                                         handleRejectProposal(proposal.id)
                                                     }
+                                                    disabled={rejectingProposal === proposal.id}
                                                     className="text-destructive hover:text-destructive"
                                                 >
                                                     <X className="h-4 w-4 mr-1" />
-                                                    Rechazar todas
+                                                    {rejectingProposal === proposal.id
+                                                        ? "Rechazando..."
+                                                        : "Rechazar todas"}
                                                 </Button>
                                             </div>
                                         )}

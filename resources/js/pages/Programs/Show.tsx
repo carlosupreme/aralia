@@ -162,12 +162,6 @@ export default function ShowProgram({ program }: Props) {
                                 <Calendar className="w-4 h-4 mr-2" />
                                 Programar Cita
                             </Button>
-                            <Link href={`/programs/${program.id}/edit`}>
-                                <Button variant="outline">
-                                    <Settings className="w-4 h-4 mr-2" />
-                                    Configurar
-                                </Button>
-                            </Link>
                         </div>
                     )}
                 </div>
@@ -431,12 +425,6 @@ export default function ShowProgram({ program }: Props) {
                                                     {/* Level Actions for Psychologists */}
                                                     {isPsychologist && (
                                                         <div className="flex gap-2 mt-4 pt-4 border-t">
-                                                            <Link href={`/levels/${level.id}/multimedia/create`}>
-                                                                <Button variant="outline" size="sm">
-                                                                    <Play className="w-4 h-4 mr-2" />
-                                                                    Agregar Contenido
-                                                                </Button>
-                                                            </Link>
                                                             <Link href={`/levels/${level.id}/edit`}>
                                                                 <Button variant="ghost" size="sm">
                                                                     <Settings className="w-4 h-4 mr-2" />
