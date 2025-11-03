@@ -185,8 +185,8 @@ export default function WeeklyCalendar({ appointments, onAppointmentClick }: Wee
                                                     <div
                                                         key={apt.id}
                                                         className={cn(
-                                                            "absolute left-1 right-1 rounded-md border-2 p-2 cursor-pointer transition-all",
-                                                            "text-white text-xs overflow-hidden shadow-sm",
+                                                            "absolute left-1 right-1 rounded-md border-2 p-2 cursor-pointer transition-all z-10",
+                                                            "text-white text-xs overflow-hidden shadow-sm hover:shadow-lg hover:scale-[1.02]",
                                                             getStatusColor(apt.status)
                                                         )}
                                                         style={{
