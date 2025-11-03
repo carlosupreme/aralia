@@ -6,7 +6,8 @@ import { Separator } from '@/components/ui/separator';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import {
     ArrowLeft,
     ArrowRight,
@@ -104,6 +105,102 @@ export default function StudentView({ level, allLevels, currentLevelIndex }: Pro
         level.multimedia.length > 0 ? level.multimedia[0] : null
     );
     const [sidebarOpen, setSidebarOpen] = useState(true);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [videoProgress, setVideoProgress] = useState(0);
+    const progressUpdateInterval = useRef<NodeJS.Timeout | null>(null);
+
+    // Load video progress when media changes
+    useEffect(() => {
+        if (selectedMedia && selectedMedia.type === 'video') {
+            loadVideoProgress(selectedMedia.id);
+        }
+
+        // Cleanup interval on unmount or media change
+        return () => {
+            if (progressUpdateInterval.current) {
+                clearInterval(progressUpdateInterval.current);
+            }
+        };
+    }, [selectedMedia]);
+
+    // Load saved video progress
+    const loadVideoProgress = async (multimediaId: number) => {
+        try {
+            const response = await axios.get(`/multimedia/${multimediaId}/progress`);
+            setVideoProgress(response.data.current_time);
+
+            // Set video current time when metadata is loaded
+            if (videoRef.current) {
+                const setTime = () => {
+                    if (videoRef.current && response.data.current_time > 0) {
+                        videoRef.current.currentTime = response.data.current_time;
+                    }
+                };
+
+                if (videoRef.current.readyState >= 1) {
+                    setTime();
+                } else {
+                    videoRef.current.addEventListener('loadedmetadata', setTime, { once: true });
+                }
+            }
+        } catch (error) {
+            console.error('Failed to load video progress:', error);
+        }
+    };
+
+    // Save video progress
+    const saveVideoProgress = async (multimediaId: number, currentTime: number, duration: number) => {
+        try {
+            await axios.post(`/multimedia/${multimediaId}/progress`, {
+                current_time: Math.floor(currentTime),
+                duration: Math.floor(duration),
+            });
+        } catch (error) {
+            console.error('Failed to save video progress:', error);
+        }
+    };
+
+    // Handle video timeupdate
+    const handleVideoTimeUpdate = () => {
+        if (!videoRef.current || !selectedMedia) return;
+
+        const currentTime = videoRef.current.currentTime;
+        const duration = videoRef.current.duration;
+
+        // Save progress every 5 seconds
+        if (progressUpdateInterval.current === null) {
+            progressUpdateInterval.current = setInterval(() => {
+                if (videoRef.current && selectedMedia) {
+                    saveVideoProgress(
+                        selectedMedia.id,
+                        videoRef.current.currentTime,
+                        videoRef.current.duration
+                    );
+                }
+            }, 5000);
+        }
+    };
+
+    // Handle video pause - save immediately
+    const handleVideoPause = () => {
+        if (videoRef.current && selectedMedia) {
+            saveVideoProgress(
+                selectedMedia.id,
+                videoRef.current.currentTime,
+                videoRef.current.duration
+            );
+        }
+    };
+
+    // Convert duration string (MM:SS) to seconds
+    const durationToSeconds = (duration?: string): number => {
+        if (!duration) return 0;
+        const parts = duration.split(':');
+        if (parts.length === 2) {
+            return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        }
+        return 0;
+    };
 
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Programas y Planes', href: '/programs' },
@@ -134,16 +231,33 @@ export default function StudentView({ level, allLevels, currentLevelIndex }: Pro
 
         switch (selectedMedia.type) {
             case 'video':
+                // Check if video is longer than 5 minutes (300 seconds)
+                const videoDurationSeconds = durationToSeconds(selectedMedia.duration);
+                const useStreaming = videoDurationSeconds > 300;
+                const videoSrc = useStreaming
+                    ? `/multimedia/${selectedMedia.id}/stream`
+                    : mediaUrl;
+
                 return (
                     <div className="w-full">
                         <video
+                            ref={videoRef}
                             controls
                             className="w-full h-auto rounded-lg shadow-md"
                             poster=""
+                            onTimeUpdate={handleVideoTimeUpdate}
+                            onPause={handleVideoPause}
+                            onEnded={handleVideoPause}
                         >
-                            <source src={mediaUrl} type="video/mp4" />
+                            <source src={videoSrc} type="video/mp4" />
                             Tu navegador no soporta el elemento video.
                         </video>
+                        {useStreaming && (
+                            <div className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+                                <Clock className="w-4 h-4" />
+                                Streaming de video - {selectedMedia.duration}
+                            </div>
+                        )}
                     </div>
                 );
 

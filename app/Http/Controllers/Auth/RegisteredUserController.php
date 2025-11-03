@@ -22,7 +22,16 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('auth/register');
+        // Get active programs for selection
+        $programs = \App\Models\Program::where('is_active', true)
+            ->with('psychologist:id,name')
+            ->select('id', 'name', 'description', 'psychologist_id', 'monthly_price')
+            ->orderBy('name')
+            ->get();
+
+        return Inertia::render('auth/register', [
+            'programs' => $programs,
+        ]);
     }
 
     /**
@@ -41,6 +50,7 @@ class RegisteredUserController extends Controller
             'city' => 'required|string|max:255',
             'parent' => 'nullable|string|max:255',
             'parent_name' => 'required|string|max:255',
+            'program_id' => 'required|exists:programs,id',
         ]);
 
         $user = User::create([
@@ -61,6 +71,16 @@ class RegisteredUserController extends Controller
             'parent' => $request->parent,
             'parent_name' => $request->parent_name,
         ]);
+
+        // Enroll student in selected program
+        $program = \App\Models\Program::findOrFail($request->program_id);
+        $user->enrollInProgram($program);
+
+        // Unlock the first level of the program
+        $firstLevel = $program->firstLevel();
+        if ($firstLevel) {
+            $firstLevel->unlockFor($user);
+        }
 
         event(new Registered($user));
 

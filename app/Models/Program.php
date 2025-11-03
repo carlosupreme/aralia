@@ -14,10 +14,12 @@ class Program extends Model
         'description',
         'psychologist_id',
         'is_active',
+        'monthly_price',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'monthly_price' => 'decimal:2',
     ];
 
     /**
@@ -68,5 +70,13 @@ class Program extends Model
     public function firstLevel(): ?Level
     {
         return $this->levels()->orderBy('order_index')->first();
+    }
+
+    /**
+     * Get all payments for this program
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 }

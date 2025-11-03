@@ -162,15 +162,35 @@ class FileUploadController extends Controller
     }
 
     /**
-     * Get media duration (placeholder - would need FFMpeg for real implementation)
+     * Get media duration using getID3
      */
     private function getMediaDuration($path, $type)
     {
-        // For now, return null. In a real implementation, you'd use FFMpeg
-        // to get actual duration for video/audio files
-        if (in_array($type, ['video', 'audio'])) {
-            return null; // Could implement with getID3 or FFMpeg
+        if (!in_array($type, ['video', 'audio'])) {
+            return null;
         }
+
+        try {
+            $getID3 = new \getID3;
+            $fullPath = storage_path('app/public/' . $path);
+
+            if (!file_exists($fullPath)) {
+                return null;
+            }
+
+            $fileInfo = $getID3->analyze($fullPath);
+
+            if (isset($fileInfo['playtime_seconds'])) {
+                $seconds = (int) $fileInfo['playtime_seconds'];
+                $minutes = floor($seconds / 60);
+                $remainingSeconds = $seconds % 60;
+
+                return sprintf('%d:%02d', $minutes, $remainingSeconds);
+            }
+        } catch (\Exception $e) {
+            \Log::warning('Failed to extract media duration: ' . $e->getMessage());
+        }
+
         return null;
     }
 }

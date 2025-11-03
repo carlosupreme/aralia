@@ -96,4 +96,91 @@ class User extends Authenticatable
             'enrolled_at' => now(),
         ]);
     }
+
+    /**
+     * Get all payments made by this user
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Get all notifications for this user
+     */
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    /**
+     * Get the latest confirmed payment for a specific program
+     */
+    public function latestConfirmedPaymentFor(Program $program): ?Payment
+    {
+        return $this->payments()
+            ->where('program_id', $program->id)
+            ->where('status', Payment::STATUS_CONFIRMED)
+            ->latest('paid_at')
+            ->first();
+    }
+
+    /**
+     * Check if user has access to program content (payment is up to date)
+     */
+    public function hasAccessToProgram(Program $program): bool
+    {
+        // Psychologists always have access to their own programs
+        if ($this->isPsychologist() && $program->psychologist_id === $this->id) {
+            return true;
+        }
+
+        // Students need to be enrolled
+        if (!$program->hasStudent($this)) {
+            return false;
+        }
+
+        // Get the latest confirmed payment
+        $latestPayment = $this->latestConfirmedPaymentFor($program);
+
+        // If no confirmed payment, no access
+        if (!$latestPayment) {
+            return false;
+        }
+
+        // Check if payment is still valid (not overdue)
+        if ($latestPayment->due_date) {
+            if (now()->startOfDay()->greaterThan($latestPayment->due_date)) {
+                return false; // Payment is overdue
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if user needs to make a payment for a program
+     */
+    public function needsToPayFor(Program $program): bool
+    {
+        if (!$program->hasStudent($this)) {
+            return false;
+        }
+
+        $latestPayment = $this->latestConfirmedPaymentFor($program);
+
+        // No payment yet
+        if (!$latestPayment) {
+            return true;
+        }
+
+        // Check if overdue
+        if ($latestPayment->due_date) {
+            if (now()->startOfDay()->greaterThan($latestPayment->due_date)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

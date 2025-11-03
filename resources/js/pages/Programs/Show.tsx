@@ -291,12 +291,19 @@ export default function ShowProgram({ program }: Props) {
                                                         <Badge variant={isCompleted ? "default" : isUnlocked ? "secondary" : "outline"}>
                                                             {isCompleted ? "Completado" : isUnlocked ? "Disponible" : "Bloqueado"}
                                                         </Badge>
-                                                        <Link href={`/levels/${level.id}/learn`}>
-                                                            <Button size="sm" variant="outline" className="flex items-center gap-2">
-                                                                <Play className="w-3 h-3" />
-                                                                Aprender
+                                                        {isUnlocked ? (
+                                                            <Link href={`/levels/${level.id}/learn`}>
+                                                                <Button size="sm" variant="outline" className="flex items-center gap-2">
+                                                                    <Play className="w-3 h-3" />
+                                                                    Aprender
+                                                                </Button>
+                                                            </Link>
+                                                        ) : (
+                                                            <Button size="sm" variant="outline" disabled className="flex items-center gap-2">
+                                                                <Lock className="w-3 h-3" />
+                                                                Bloqueado
                                                             </Button>
-                                                        </Link>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </CardHeader>

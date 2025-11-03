@@ -58,9 +58,14 @@ const mainNavItems: NavItem[] = [
         icon: Trophy,
     },
     {
+        title: 'Pagos',
+        href: '/payments',
+        icon: CreditCard,
+    },
+    {
         title: 'Suscripción',
         href: suscripcion(),
-        icon: CreditCard,
+        icon: Star,
     },
 ];
 
@@ -88,7 +93,7 @@ const adminNavItems: NavItem[] = [
     },
     {
         title: 'Pagos y Suscripciones',
-        href: '/admin/pagos',
+        href: '/admin/payments',
         icon: CreditCard,
     },
     {

@@ -132,6 +132,27 @@ class LevelController extends Controller
      */
     public function studentView(Level $level)
     {
+        $user = auth()->user();
+        $program = $level->program;
+
+        // Check if user has access to this level
+        if ($user->isPsychologist() && $program->psychologist_id !== $user->id) {
+            abort(403, 'No tienes acceso a este nivel.');
+        }
+
+        if ($user->isStudent()) {
+            // Check if student is enrolled in the program
+            if (!$program->hasStudent($user)) {
+                abort(403, 'No estás inscrito en este programa.');
+            }
+
+            // Check if the level is unlocked for the student
+            if (!$level->isUnlockedFor($user)) {
+                return redirect()->route('programs.show', $program->id)
+                    ->with('error', 'Este nivel no está desbloqueado. Completa los niveles anteriores primero.');
+            }
+        }
+
         $level->load(['program', 'multimedia' => function ($query) {
             $query->where('is_active', true)->orderBy('order_index');
         }]);

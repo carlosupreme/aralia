@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\Program;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -85,5 +86,20 @@ class RolesAndPermissionsSeeder extends Seeder
                 'parent_name' => 'María Rodríguez',
             ]
         );
+
+        // Crear programa de ejemplo
+        $program = Program::firstOrCreate(
+            ['name' => 'Programa de Desarrollo Mental'],
+            [
+                'description' => 'Programa completo para el desarrollo de habilidades mentales en deportistas.',
+                'psychologist_id' => $psychologist->id,
+                'monthly_price' => 500.00,
+            ]
+        );
+
+        // Inscribir al estudiante en el programa
+        if (!$program->hasStudent($studentUser)) {
+            $studentUser->enrollInProgram($program);
+        }
     }
 }

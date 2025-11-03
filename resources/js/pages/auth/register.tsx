@@ -4,11 +4,27 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, BookOpen, Users } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
-export default function Register() {
+interface Program {
+    id: number;
+    name: string;
+    description: string;
+    monthly_price: string;
+    psychologist: {
+        id: number;
+        name: string;
+    };
+}
+
+interface Props {
+    programs: Program[];
+}
+
+export default function Register({ programs }: Props) {
     const [currentStep, setCurrentStep] = useState(1);
-    const totalSteps = 4;
+    const totalSteps = 5;
 
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
@@ -22,6 +38,7 @@ export default function Register() {
         city: '',
         parent: '',
         parent_name: '',
+        program_id: '',
     });
 
     const validateStep = (step: number): boolean => {
@@ -34,6 +51,8 @@ export default function Register() {
                 return !!(data.date_of_birth && data.country && data.city);
             case 4:
                 return !!data.parent_name;
+            case 5:
+                return !!data.program_id;
             default:
                 return false;
         }
@@ -67,6 +86,8 @@ export default function Register() {
                     setCurrentStep(3);
                 } else if (errors.parent_name || errors.parent) {
                     setCurrentStep(4);
+                } else if (errors.program_id) {
+                    setCurrentStep(5);
                 }
             },
         });
@@ -301,6 +322,85 @@ export default function Register() {
                                             placeholder="Teléfono o email"
                                             className="h-11"
                                         />
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Step 5: Selección de Programa */}
+                            {currentStep === 5 && (
+                                <div className="space-y-5 animate-in fade-in duration-300">
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-medium">
+                                            Selecciona tu Programa de Entrenamiento
+                                        </Label>
+                                        <p className="text-xs text-gray-500">
+                                            Elige el programa en el que deseas inscribirte
+                                        </p>
+
+                                        {programs && programs.length > 0 ? (
+                                            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                                                {programs.map((program) => (
+                                                    <Card
+                                                        key={program.id}
+                                                        className={`cursor-pointer transition-all hover:shadow-md ${
+                                                            data.program_id === program.id.toString()
+                                                                ? 'ring-2 ring-primary border-primary'
+                                                                : 'border-gray-200'
+                                                        }`}
+                                                        onClick={() => setData('program_id', program.id.toString())}
+                                                    >
+                                                        <CardContent className="p-4">
+                                                            <div className="flex items-start gap-3">
+                                                                <div className={`p-2 rounded-lg ${
+                                                                    data.program_id === program.id.toString()
+                                                                        ? 'bg-primary/10'
+                                                                        : 'bg-gray-100'
+                                                                }`}>
+                                                                    <BookOpen className={`w-5 h-5 ${
+                                                                        data.program_id === program.id.toString()
+                                                                            ? 'text-primary'
+                                                                            : 'text-gray-600'
+                                                                    }`} />
+                                                                </div>
+                                                                <div className="flex-1 min-w-0">
+                                                                    <h3 className="font-semibold text-sm mb-1">
+                                                                        {program.name}
+                                                                    </h3>
+                                                                    {program.description && (
+                                                                        <p className="text-xs text-gray-600 mb-2 line-clamp-2">
+                                                                            {program.description}
+                                                                        </p>
+                                                                    )}
+                                                                    <div className="flex items-center justify-between gap-2">
+                                                                        <div className="flex items-center gap-1 text-xs text-gray-500">
+                                                                            <Users className="w-3 h-3" />
+                                                                            <span>Psicólogo: {program.psychologist.name}</span>
+                                                                        </div>
+                                                                        {program.monthly_price && parseFloat(program.monthly_price) > 0 && (
+                                                                            <div className="flex items-center gap-1">
+                                                                                <span className="text-sm font-semibold text-primary">
+                                                                                    ${parseFloat(program.monthly_price).toFixed(2)}
+                                                                                </span>
+                                                                                <span className="text-xs text-gray-500">/mes</span>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </CardContent>
+                                                    </Card>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="text-center py-8 text-gray-500">
+                                                <BookOpen className="w-12 h-12 mx-auto mb-2 text-gray-400" />
+                                                <p className="text-sm">No hay programas disponibles en este momento</p>
+                                            </div>
+                                        )}
+
+                                        {errors.program_id && (
+                                            <p className="text-xs text-red-600">{errors.program_id}</p>
+                                        )}
                                     </div>
                                 </div>
                             )}
