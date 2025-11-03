@@ -122,6 +122,24 @@ class ProgramController extends Controller
             });
         }
 
+        // For psychologists, add student progress data
+        if ($user->isPsychologist()) {
+            $program->students->map(function ($student) use ($program) {
+                // Get level progress for this student
+                $student->level_progress = $program->levels->map(function ($level) use ($student) {
+                    return [
+                        'level_id' => $level->id,
+                        'level_name' => $level->name,
+                        'level_order' => $level->order_index,
+                        'is_unlocked' => $level->isUnlockedFor($student),
+                        'is_completed' => $level->isCompletedFor($student),
+                    ];
+                })->values();
+
+                return $student;
+            });
+        }
+
         return Inertia::render('Programs/Show', [
             'program' => $program,
         ]);

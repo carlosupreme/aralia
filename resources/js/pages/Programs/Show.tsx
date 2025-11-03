@@ -20,7 +20,9 @@ import {
     BookOpen,
     Lock,
     CheckCircle,
-    Clock
+    Clock,
+    Unlock,
+    User
 } from 'lucide-react';
 
 interface Multimedia {
@@ -46,6 +48,21 @@ interface Level {
     is_completed_for_user?: boolean;
 }
 
+interface LevelProgress {
+    level_id: number;
+    level_name: string;
+    level_order: number;
+    is_unlocked: boolean;
+    is_completed: boolean;
+}
+
+interface Student {
+    id: number;
+    name: string;
+    email: string;
+    level_progress?: LevelProgress[];
+}
+
 interface Program {
     id: number;
     name: string;
@@ -58,11 +75,7 @@ interface Program {
         name: string;
         email: string;
     };
-    students?: Array<{
-        id: number;
-        name: string;
-        email: string;
-    }>;
+    students?: Student[];
     levels: Level[];
 }
 
@@ -205,17 +218,82 @@ export default function ShowProgram({ program }: Props) {
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
                                         <Users className="w-4 h-4" />
-                                        Estudiantes Inscritos
+                                        Estudiantes Inscritos ({program.students.length})
                                     </CardTitle>
+                                    <CardDescription>
+                                        Gestiona el acceso a niveles de tus estudiantes
+                                    </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="space-y-2">
+                                    <div className="space-y-4">
                                         {program.students.map((student) => (
-                                            <div key={student.id} className="flex items-center gap-2 text-sm">
-                                                <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-xs">
-                                                    {student.name[0].toUpperCase()}
+                                            <div key={student.id} className="space-y-2 pb-4 border-b last:border-0 last:pb-0">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-sm font-medium">
+                                                        {student.name[0].toUpperCase()}
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <p className="font-medium text-sm">{student.name}</p>
+                                                        <p className="text-xs text-muted-foreground">{student.email}</p>
+                                                    </div>
                                                 </div>
-                                                <span>{student.name}</span>
+                                                {student.level_progress && student.level_progress.length > 0 && (
+                                                    <div className="ml-10 space-y-1">
+                                                        <p className="text-xs font-medium text-muted-foreground mb-2">Progreso por niveles:</p>
+                                                        <div className="grid gap-2">
+                                                            {student.level_progress.map((progress, index) => (
+                                                                <div key={progress.level_id} className="flex items-center justify-between gap-2 text-xs">
+                                                                    <div className="flex items-center gap-2 flex-1">
+                                                                        {progress.is_completed ? (
+                                                                            <CheckCircle className="w-3 h-3 text-green-600" />
+                                                                        ) : progress.is_unlocked ? (
+                                                                            <Unlock className="w-3 h-3 text-blue-600" />
+                                                                        ) : (
+                                                                            <Lock className="w-3 h-3 text-gray-400" />
+                                                                        )}
+                                                                        <span className="truncate">
+                                                                            Nivel {progress.level_order}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="flex items-center gap-1">
+                                                                        {progress.is_completed ? (
+                                                                            <Badge variant="default" className="text-xs">Completado</Badge>
+                                                                        ) : progress.is_unlocked ? (
+                                                                            <>
+                                                                                <Badge variant="secondary" className="text-xs">Activo</Badge>
+                                                                                <Link
+                                                                                    href={`/levels/${progress.level_id}/complete/${student.id}`}
+                                                                                    method="post"
+                                                                                    as="button"
+                                                                                >
+                                                                                    <Button size="sm" variant="default" className="h-6 text-xs">
+                                                                                        Completar
+                                                                                    </Button>
+                                                                                </Link>
+                                                                            </>
+                                                                        ) : (
+                                                                            <>
+                                                                                {index > 0 && student.level_progress![index - 1].is_completed ? (
+                                                                                    <Link
+                                                                                        href={`/levels/${progress.level_id}/unlock/${student.id}`}
+                                                                                        method="post"
+                                                                                        as="button"
+                                                                                    >
+                                                                                        <Button size="sm" variant="outline" className="h-6 text-xs">
+                                                                                            Desbloquear
+                                                                                        </Button>
+                                                                                    </Link>
+                                                                                ) : (
+                                                                                    <Badge variant="outline" className="text-xs">Bloqueado</Badge>
+                                                                                )}
+                                                                            </>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
